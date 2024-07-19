@@ -32,6 +32,7 @@ defmodule App.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:argon2_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.12"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -58,6 +59,7 @@ defmodule App.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
+      {:brcpfcnpj, "~> 1.0.0"},
       {:ecto_ulid, "~> 0.2.0"}
     ]
   end
