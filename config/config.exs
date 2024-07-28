@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :app, App.Repo, migration_primary_key: [name: :id, type: :binary_id]
+
 config :app,
   ecto_repos: [App.Repo],
   generators: [timestamp_type: :utc_datetime]
