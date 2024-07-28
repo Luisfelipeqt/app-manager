@@ -2,9 +2,7 @@ defmodule App.Repo.Migrations.CreateCompaniesTable do
   use Ecto.Migration
 
   def up do
-    create table(:companies, primary_key: false) do
-      # Company Data
-      add :id, :binary_id, null: false, primary_key: true
+    create table(:companies) do
       add :cnpj, :string, size: 18, null: false
       add :contract_signature_date, :date
       add :email, :string, null: false
@@ -12,11 +10,12 @@ defmodule App.Repo.Migrations.CreateCompaniesTable do
       add :trading_name, :string, null: false
       add :landline_phone, :string, size: 15, null: false, default: "Não informado"
       add :legal_name, :string, null: false
-      add :phone, :string, size: 15, null: false
+      add :mobile_phone, :string, size: 15, null: false
+      add :signature, :string, null: false
 
       # Company Owner Data
-      add :responsible_name, :string, null: false
       add :responsible_cpf, :string, size: 14, null: false
+      add :responsible_name, :string, null: false
 
       # Company Address Data
       add :address, :string, null: false, default: "Não informado"
@@ -26,17 +25,16 @@ defmodule App.Repo.Migrations.CreateCompaniesTable do
       add :zip_code, :string, size: 9, null: false
 
       # Company Payment Data
-      add :is_signature_paid, :boolean
+      add :is_signature_paid, :boolean, default: false
       add :is_active, :boolean, null: false, default: true
       add :is_blocked, :boolean, null: false, default: false
 
-      add :deleted_at, :string, null: true, default: nil
       timestamps(inserted_at: :created_at, type: :utc_datetime)
     end
 
     create unique_index(:companies, :cnpj)
     create unique_index(:companies, :email)
-    create unique_index(:companies, :phone)
+    create unique_index(:companies, :mobile_phone)
     create unique_index(:companies, :landline_phone)
     create unique_index(:companies, :responsible_cpf)
 

@@ -2,8 +2,7 @@ defmodule App.Repo.Migrations.CreateSalesTable do
   use Ecto.Migration
 
   def up do
-    create table(:sales, primary_key: false) do
-      add :id, :binary_id, null: false, primary_key: true
+    create table(:sales) do
       add :installment, :integer, null: false, default: 1
       add :total_value, :integer, default: 0, null: false
       add :exemption, :boolean, default: false

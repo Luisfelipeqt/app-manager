@@ -2,14 +2,13 @@ defmodule App.Repo.Migrations.CreateCustomersTable do
   use Ecto.Migration
 
   def up do
-    create table(:customers, primary_key: false) do
-      add :id, :binary_id, null: false, primary_key: true
-      add :sex, :string
+    create table(:customers) do
+      add :gender, :string
       add :birthday, :date
       add :cpf, :char, size: 14, null: false
       add :email, :string, null: false
       add :full_name, :string, null: false
-      add :phone, :char, size: 15, null: false
+      add :mobile_phone, :char, size: 15, null: false
       add :registration, :date
       add :image_url, :string, null: false, default: "/images/default-user.svg"
 
@@ -21,6 +20,7 @@ defmodule App.Repo.Migrations.CreateCustomersTable do
       add :zip_code, :string, size: 9, null: false
 
       add(:is_active, :boolean, default: true, null: false)
+      add(:is_blocked, :boolean, default: false, null: false)
 
       add(
         :company_id,
@@ -28,14 +28,14 @@ defmodule App.Repo.Migrations.CreateCustomersTable do
         null: false
       )
 
-      add :deleted_at, :string, null: true, default: nil
+      add :deleted_at, :date, null: true, default: nil
       timestamps(inserted_at: :created_at, type: :utc_datetime)
     end
 
-    create index(:customers, [:company_id, :cpf])
+    create index(:customers, [:cpf, :company_id])
     create unique_index(:customers, :cpf)
     create unique_index(:customers, :email)
-    create unique_index(:customers, :phone)
+    create unique_index(:customers, :mobile_phone)
 
     execute "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
 
