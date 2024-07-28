@@ -38,4 +38,15 @@ defmodule App.Customers do
         Logger.error("Error deleting customer: #{inspect(e)}")
     end
   end
+
+  def search(""), do: []
+
+  def search(search_term) do
+    search_term = "%#{search_term}%"
+
+    from(c in Customer)
+    |> where([c], ilike(c.full_name, ^search_term))
+    |> select([c], %{id: c.id, full_name: c.full_name, cpf: c.cpf})
+    |> Repo.all()
+  end
 end

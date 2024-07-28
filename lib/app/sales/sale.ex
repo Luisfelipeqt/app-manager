@@ -1,7 +1,9 @@
 defmodule App.Sales.Sale do
   use Ecto.Schema
   import Ecto.Changeset
+  alias App.Installments.Installment
   alias App.Customers.Customer
+  alias App.Installments.Installment
 
   @optionals ~w(id created_at updated_at)a
   @which_payment ~w(boleto credito debito dinheiro pix promissoria)a

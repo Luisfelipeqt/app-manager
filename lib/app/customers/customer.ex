@@ -3,8 +3,9 @@ defmodule App.Customers.Customer do
   import Ecto.Changeset
   import Brcpfcnpj.Changeset
   alias App.Companies.Company
+  alias App.Sales.Sale
 
-  @optionals ~w(id inserted_at updated_at state address locality neighborhood number)a
+  @optionals ~w(id created_at updated_at state address locality neighborhood number)a
 
   @primary_key {:id, Ecto.ULID, autogenerate: true}
   @foreign_key_type Ecto.ULID
