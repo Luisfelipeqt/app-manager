@@ -15,7 +15,7 @@ defmodule App.Accounts.User do
     field :full_name, :string
     field :image_url, :string, default: "/images/default-user.svg"
 
-    field(:role, Ecto.Enum, values: ~w(admin owner employee)a, default: :employee)
+    field(:role, Ecto.Enum, values: ~w(superadmin admin owner employee)a, default: :employee)
     belongs_to(:company, Company, foreign_key: :company_id)
 
     timestamps(inserted_at: :created_at, type: :utc_datetime)

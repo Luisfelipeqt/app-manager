@@ -18,9 +18,12 @@ defmodule AppWeb.Router do
   end
 
   scope "/", AppWeb do
-    pipe_through :browser
+    pipe_through [:browser, :require_authenticated_user]
 
-    get "/", PageController, :home
+    live_session :authenticated,
+      on_mount: {AppWeb.UserAuth, :ensure_authenticated} do
+      live "/visao-geral", HomeLive.Index
+    end
   end
 
   # Other scopes may use custom stacks.
