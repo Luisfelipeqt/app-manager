@@ -11,6 +11,7 @@ module.exports = {
     "../lib/app_web.ex",
     "../lib/app_web/**/*.*ex"
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
