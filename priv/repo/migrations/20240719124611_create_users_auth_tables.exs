@@ -24,12 +24,12 @@ defmodule App.Repo.Migrations.CreateUsersAuthTables do
     create unique_index(:users, [:email])
 
     create table(:users_tokens) do
-      add :user_id, references(:users, on_delete: :delete_all, type: :binary_id), null: false
+      add :user_id, references(:users, on_delete: :delete_all), null: false
       add :token, :binary, null: false
       add :context, :string, null: false
       add :sent_to, :string
 
-      timestamps(type: :utc_datetime, updated_at: false)
+      timestamps(inserted_at: :created_at, type: :utc_datetime, updated_at: false)
     end
 
     create index(:users_tokens, [:user_id])
