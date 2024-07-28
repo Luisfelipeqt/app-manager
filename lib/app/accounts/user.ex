@@ -2,14 +2,23 @@ defmodule App.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias App.Companies.Company
+
+  @primary_key {:id, Ecto.ULID, autogenerate: true}
+  @foreign_key_type Ecto.ULID
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :current_password, :string, virtual: true, redact: true
     field :confirmed_at, :utc_datetime
+    field :full_name, :string
+    field :image_url, :string, default: "/images/default-user.svg"
 
-    timestamps(type: :utc_datetime)
+    field(:role, Ecto.Enum, values: ~w(admin owner employee)a, default: :employee)
+    belongs_to(:company, Company, foreign_key: :company_id)
+
+    timestamps(inserted_at: :created_at, type: :utc_datetime)
   end
 
   @doc """
@@ -40,6 +49,10 @@ defmodule App.Accounts.User do
     |> cast(attrs, [:email, :password])
     |> validate_email(opts)
     |> validate_password(opts)
+    |> validate_confirmation(:password, message: "senhas digitadas não coincidem")
+    |> validate_inclusion(:role, ~w(owner employee)a)
+    |> validate_exclusion(:role, :admin)
+    |> assoc_constraint(:company)
   end
 
   defp validate_email(changeset, opts) do
