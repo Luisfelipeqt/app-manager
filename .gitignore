@@ -171,3 +171,4 @@ fabric.properties
 /._build/
 
 
+/node_modules/
