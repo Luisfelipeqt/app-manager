@@ -7,6 +7,11 @@
 # General application configuration
 import Config
 
+config :money,
+  default_currency: :BRL,
+  separator: ".",
+  delimiter: ","
+
 config :app, App.Repo, migration_primary_key: [name: :id, type: :binary_id]
 
 config :app,

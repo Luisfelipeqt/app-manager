@@ -18,6 +18,7 @@ defmodule App.Customers do
   def find_customer(cpf, company_id) do
     from(c in Customer)
     |> where([c], c.cpf == ^cpf and c.company_id == ^company_id)
+    |> or_where([c], c.id == ^cpf and c.company_id == ^company_id)
     |> where([c], is_nil(c.deleted_at))
     |> Repo.one()
     |> case do
