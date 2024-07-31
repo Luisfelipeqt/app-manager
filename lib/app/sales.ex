@@ -4,7 +4,9 @@ defmodule App.Sales do
   alias App.Repo
   alias App.Sales.Sale
 
-  def sales_by_customer_id(customer_id)  do
+  def sales_by_customer_id(""), do: []
+
+  def sales_by_customer_id(customer_id) do
     from(s in Sale)
     |> join(:left, [s], c in assoc(s, :customer))
     |> where([s, c], s.customer_id == ^customer_id)
