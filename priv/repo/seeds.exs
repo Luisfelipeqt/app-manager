@@ -61,3 +61,60 @@ user_felipe =
   }
 
 App.Repo.insert!(user_felipe)
+
+for _ <- 1..5000 do
+  customer = %App.Customers.Customer{
+    gender: Enum.random(~w(male female non_binary other prefer_not_to_say)a),
+    birthday: Faker.Date.between(~D[1924-01-01], ~D[2016-01-01]),
+    cpf: Brcpfcnpj.cpf_format(Brcpfcnpj.cpf_generate()),
+    email: Faker.Internet.email(),
+    full_name: Faker.Person.name(),
+    mobile_phone: Faker.Phone.PtBr.phone(),
+    image_url: Faker.Avatar.image_url(),
+    address: Faker.Address.PtBr.street_name(),
+    locality: Faker.Address.PtBr.city(),
+    neighborhood: Faker.Address.PtBr.neighborhood(),
+    state: Faker.Address.PtBr.state_abbr(),
+    zip_code: Faker.Address.PtBr.zip_code(),
+    created_at:
+      DateTime.truncate(
+        Faker.DateTime.between(~U[2016-01-01T00:00:00Z], ~U[2024-08-03T00:00:00Z]),
+        :second
+      ),
+    company_id: solutions_company.id
+  }
+
+  customer_inserted = App.Repo.insert!(customer)
+
+  sale = %App.Sales.Sale{
+    installment: Enum.random(1..12),
+    total_value: Enum.random(8_000..150_000),
+    which_payment: Enum.random(~w(boleto credito debito dinheiro pix promissoria)a),
+    which_process: Enum.random(~w(
+    adicao_categoria_b
+    aula_extra
+    curso_teorico
+    primeira_habilitacao_a
+    primeira_habilitacao_b
+    primeira_habilitacao_ab
+    reabilitacao
+    reciclagem
+    repetencia_a
+    repetencia_b
+    repetencia_ab
+    repetencia_teorica
+    renovacao_cnh
+    outro
+  )a),
+    quantity: Enum.random(1..5),
+    is_paid: Enum.random([true, false]),
+    created_at:
+      DateTime.truncate(
+        Faker.DateTime.between(~U[2016-01-01T00:00:00Z], ~U[2024-08-03T00:00:00Z]),
+        :second
+      ),
+    customer_id: customer_inserted.id
+  }
+
+  sale_inserted = App.Repo.insert!(sale)
+end
