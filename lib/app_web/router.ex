@@ -23,7 +23,7 @@ defmodule AppWeb.Router do
     live_session :authenticated,
       on_mount: {AppWeb.UserAuth, :ensure_authenticated} do
       live "/visao-geral", HomeLive.Index
-      live "/customer/:id/show", CustomersLive.Index, :index
+      live "/cliente/:id/mostrar", CustomersLive.Index, :index
     end
   end
 
