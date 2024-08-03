@@ -8,7 +8,7 @@ defmodule App.Repo.Migrations.CreateCustomersTable do
       add :cpf, :char, size: 14, null: false
       add :email, :string, null: false
       add :full_name, :string, null: false
-      add :mobile_phone, :char, size: 15, null: false
+      add :mobile_phone, :char, size: 20, null: false
       add :registration, :date
       add :image_url, :string, null: false, default: "/images/default-user.svg"
 
@@ -17,7 +17,7 @@ defmodule App.Repo.Migrations.CreateCustomersTable do
       add :locality, :string, null: false, default: "Não informado"
       add :neighborhood, :string, null: false, default: "Não informado"
       add :state, :char, size: 2, null: false, default: "SP"
-      add :zip_code, :string, size: 9, null: false
+      add :zip_code, :string, size: 10, null: false
 
       add(:is_active, :boolean, default: true, null: false)
       add(:is_blocked, :boolean, default: false, null: false)
