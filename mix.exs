@@ -61,7 +61,9 @@ defmodule App.MixProject do
       {:bandit, "~> 1.2"},
       {:brcpfcnpj, "~> 1.0.0"},
       {:ecto_ulid, "~> 0.2.0"},
-      {:money, "~> 1.12"}
+      {:money, "~> 1.12"},
+      {:timex, "~> 3.0"},
+      {:faker, "~> 0.18"}
     ]
   end
 
