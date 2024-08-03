@@ -70,7 +70,7 @@ defmodule App.Utils do
     end
   end
 
-  def real_status_payment(status) do
+  def formated_payment_status(status) do
     case status do
       nil -> "Não há"
       true -> "Pago"
