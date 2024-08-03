@@ -289,28 +289,23 @@
             rows={@streams.sales}
             row_click={fn {_id, sale} -> JS.navigate(~p"/sale/#{sale.id}") end}
           >
-            <:col :let={{_id, sale}} label="Identificação"><%= sale.id %></:col>
-            <:col :let={{_id, sale}} label="Processo"><%= sale.which_process %></:col>
-            <:col :let={{_id, sale}} label="Valor"><%= sale.value %></:col>
-            <:col :let={{_id, sale}} label="Tipo Pagamento"><%= sale.which_payment %></:col>
+            <:col :let={{_id, sale}} label="Identificação" class="font-bold">
+              <%= sale.id %>
+            </:col>
+            <:col :let={{_id, sale}} label="Processo">
+              <%= Utils.which_process(sale.which_process) %>
+            </:col>
+            <:col :let={{_id, sale}} label="Valor"><%= sale.total_value %></:col>
+            <:col :let={{_id, sale}} label="Tipo Pagamento">
+              <%= Utils.which_payment(sale.which_payment) %>
+            </:col>
             <:col :let={{_id, sale}} label="Parcelas"><%= sale.installment %></:col>
-            <:col :let={{_id, sale}} label="Situação Pagamento"><%= sale.is_paid %></:col>
-            <:col :let={{_id, sale}} label="Data"><%= sale.created_at %></:col>
-            <:action :let={{_id, sale}}>
-              <div class="sr-only">
-                <.link navigate={~p"/sale/#{sale.id}"}>Show</.link>
-              </div>
-              <.link patch={~p"/sale/#{sale.id}/edit"}>Edit</.link>
-            </:action>
-
-            <:action :let={{id, sale}}>
-              <.link
-                phx-click={JS.push("delete", value: %{id: sale.id}) |> hide("##{id}")}
-                data-confirm="Are you sure?"
-              >
-                Delete
-              </.link>
-            </:action>
+            <:col :let={{_id, sale}} label="Situação Pagamento">
+              <%= Utils.formated_payment_status(sale.is_paid) %>
+            </:col>
+            <:col :let={{_id, sale}} label="Data">
+              <%= Utils.formated_date(sale.created_at) %>
+            </:col>
           </.table>
         </div>
       </div>
