@@ -5,120 +5,378 @@
   salesview={~p"/salesview"}
   logout={~p"/users/log_out"}
 >
-  <div class="text-center mt-4">
-    <h2 class="gradient-colors">
-      Painel de Controle
-    </h2>
-    
-    <p class="text-gray-500 text-xs dark:text-gray-400">
-      Visualize as funcionalidades de gestão e acompanhamento de clientes.
+  <div class="flex justify-center m-4">
+    <div>
+      <h1 class="text-3xl gradient-colors text-center">Painel de Controle</h1>
+      <p class="text-xs text-center">
+        Visualize as funcionalidades de gestão e acompanhamento de clientes.
+      </p>
+    </div>
+  </div>
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mx-4">
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+      <.async_result :let={sales_year} assign={@sales_year}>
+        <:loading>
+          <.loading_state />
+        </:loading>
+        <:failed :let={_failure}>
+          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
+            <div class="mx-auto max-w-md text-center">
+              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Opa, algo deu errado!
+              </h1>
+              <p class="text-white">
+                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
+              </p>
+            </div>
+          </div>
+        </:failed>
+        <div class="p-6 text-center">
+          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
+            Receita Anual
+          </h3>
+          <p class=" text-sm">A soma total de todas as vendas realizadas</p>
+          <div class="text-2xl font-bold text-green-600">
+            <%= sales_year %>
+          </div>
+          <p class="text-xs text-muted-foreground">
+            Referente ao ano de <%= Date.utc_today().year %>
+          </p>
+        </div>
+      </.async_result>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+      <.async_result :let={sales_month} assign={@sales_month}>
+        <:loading>
+          <.loading_state />
+        </:loading>
+        <:failed :let={_failure}>
+          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
+            <div class="mx-auto max-w-md text-center">
+              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Opa, algo deu errado!
+              </h1>
+              <p class="text-white">
+                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
+              </p>
+            </div>
+          </div>
+        </:failed>
+        <div class="p-6 text-center">
+          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
+            Receita Mensal
+          </h3>
+          <p class=" text-sm">A soma total de todas as vendas realizadas</p>
+          <div class="text-2xl font-bold text-green-600">
+            <%= sales_month %>
+          </div>
+          <p class="text-xs text-muted-foreground">
+            Referente ao mês de <%= Utils.which_year(Date.utc_today().month) %>
+          </p>
+        </div>
+      </.async_result>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+      <.async_result :let={customers_year} assign={@customers_year}>
+        <:loading>
+          <.loading_state />
+        </:loading>
+        <:failed :let={_failure}>
+          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
+            <div class="mx-auto max-w-md text-center">
+              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Opa, algo deu errado!
+              </h1>
+              <p class="text-white">
+                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
+              </p>
+            </div>
+          </div>
+        </:failed>
+        <div class="p-6 text-center">
+          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
+            Clientes Anual
+          </h3>
+          <p class=" text-sm">O número total de clientes registrados</p>
+          <div class="text-2xl font-bold text-green-600">
+            <%= customers_year %>
+          </div>
+          <p class="text-xs text-muted-foreground">
+            Referente ao ano de <%= Date.utc_today().year %>
+          </p>
+        </div>
+      </.async_result>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+      <.async_result :let={customers_month} assign={@customers_month}>
+        <:loading>
+          <.loading_state />
+        </:loading>
+        <:failed :let={_failure}>
+          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
+            <div class="mx-auto max-w-md text-center">
+              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Opa, algo deu errado!
+              </h1>
+              <p class="text-white">
+                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
+              </p>
+            </div>
+          </div>
+        </:failed>
+        <div class="p-6 text-center">
+          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
+            Clientes Mensais
+          </h3>
+          <p class=" text-sm">O número total de clientes registrados</p>
+          <div class="text-2xl font-bold text-green-600">
+            <%= customers_month %>
+          </div>
+          <p class="text-xs text-muted-foreground">
+            Referente ao mês de <%= Utils.which_year(Date.utc_today().month) %>
+          </p>
+        </div>
+      </.async_result>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm h-full" data-v0-t="card">
+      <.async_result :let={most_sold_process_year} assign={@most_sold_process_year}>
+        <:loading>
+          <.loading_state />
+        </:loading>
+        <:failed :let={_failure}>
+          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
+            <div class="mx-auto max-w-md text-center">
+              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Opa, algo deu errado!
+              </h1>
+              <p class="text-white">
+                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
+              </p>
+            </div>
+          </div>
+        </:failed>
+        <div class="p-6 text-center">
+          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
+            Processo em Destaque
+          </h3>
+          <p class=" text-sm">O processo mais comercializado</p>
+          <p class="text-2xl font-bold text-green-600">
+            <%= Utils.which_process(most_sold_process_year.which_process) %>
+          </p>
+          <p class="text-xs">
+            Foram vendidos - <%= most_sold_process_year.count_process %>
+          </p>
+          <p class="text-xs text-muted-foreground ">
+            Referente ao ano de <%= Date.utc_today().year %>
+          </p>
+        </div>
+      </.async_result>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm h-full" data-v0-t="card">
+      <.async_result :let={most_sold_process_month} assign={@most_sold_process_month}>
+        <:loading>
+          <.loading_state />
+        </:loading>
+        <:failed :let={_failure}>
+          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
+            <div class="mx-auto max-w-md text-center">
+              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Opa, algo deu errado!
+              </h1>
+              <p class="text-white">
+                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
+              </p>
+            </div>
+          </div>
+        </:failed>
+        <div class="p-6 text-center">
+          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
+            Processo em Destaque
+          </h3>
+          <p class=" text-sm">O processo mais comercializado</p>
+          <p class="text-2xl font-bold text-green-600">
+            <%= Utils.which_process(most_sold_process_month.which_process) %>
+          </p>
+          <p class="text-xs">
+            Foram vendidos - <%= most_sold_process_month.count_process %>
+          </p>
+          <p class="text-xs text-muted-foreground ">
+            Referente ao mês de <%= Utils.which_year(Date.utc_today().month) %>
+          </p>
+        </div>
+      </.async_result>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm h-full" data-v0-t="card">
+      <.async_result :let={most_payment_method_year} assign={@most_payment_method_year}>
+        <:loading>
+          <.loading_state />
+        </:loading>
+        <:failed :let={_failure}>
+          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
+            <div class="mx-auto max-w-md text-center">
+              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Opa, algo deu errado!
+              </h1>
+              <p class="text-white">
+                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
+              </p>
+            </div>
+          </div>
+        </:failed>
+        <div class="p-6 text-center">
+          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
+            Principal forma de Pagamento
+          </h3>
+          <p class=" text-sm">O processo mais comercializado</p>
+          <p class="text-2xl font-bold text-green-600">
+            <%= Utils.which_payment(most_payment_method_year.which_payment) %>
+          </p>
+          <p class="text-xs">
+            Foram usados - <%= most_payment_method_year.count_payment %>
+          </p>
+          <p class="text-xs text-muted-foreground ">
+            Referente ao ano de <%= Date.utc_today().year %>
+          </p>
+        </div>
+      </.async_result>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm h-full" data-v0-t="card">
+      <.async_result :let={most_payment_method_month} assign={@most_payment_method_month}>
+        <:loading>
+          <.loading_state />
+        </:loading>
+        <:failed :let={_failure}>
+          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
+            <div class="mx-auto max-w-md text-center">
+              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Opa, algo deu errado!
+              </h1>
+              <p class="text-white">
+                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
+              </p>
+            </div>
+          </div>
+        </:failed>
+        <div class="p-6 text-center">
+          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
+            Principal forma de Pagamento
+          </h3>
+          <p class=" text-sm">O processo mais comercializado</p>
+          <p class="text-2xl font-bold text-green-600">
+            <%= Utils.which_payment(most_payment_method_month.which_payment) %>
+          </p>
+          <p class="text-xs">
+            Foram usados - <%= most_payment_method_month.count_payment %>
+          </p>
+          <p class="text-xs text-muted-foreground ">
+            Referente ao mês de <%= Utils.which_year(Date.utc_today().month) %>
+          </p>
+        </div>
+      </.async_result>
+    </div>
+  </div>
+  <div class="container mx-auto px-4 md:px-6 py-12">
+    <div class="mb-8">
+      <h2 class="text-3xl gradient-colors text-center">Clientes Recentes</h2>
+      <p class="text-xs text-center">
+        Uma lista dos seus clientes mais recentes e quando eles foram cadastrados.
+      </p>
+    </div>
+    <div
+      id="customer-card-id"
+      phx-update="stream"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full"
+    >
+      <div
+        :for={{customer_id, latest_customers} <- @streams.latest_customers}
+        id={customer_id}
+        class="bg-background rounded-lg shadow border overflow-hidden hover:bg-green-600/75 dark:hover:bg-rose-600/75 cursor-pointer"
+      >
+        <.link navigate={~p"/cliente/#{latest_customers.id}/mostrar"}>
+          <div class="p-6">
+            <div class="flex items-center gap-4 mb-4 ">
+              <span class="relative flex shrink-0 overflow-hidden rounded-full w-12 h-12 border">
+                <img
+                  class="aspect-square h-full w-full"
+                  alt="John Doe"
+                  src={latest_customers.image_url}
+                />
+              </span>
+              <div>
+                <h3 class="text-lg font-semibold"><%= latest_customers.full_name %></h3>
+                <p class="text-muted-foreground text-sm"><%= latest_customers.email %></p>
+                <p class="text-muted-foreground text-sm">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4 inline-block mr-1"
+                  >
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                    </path>
+                  </svg>
+                  <%= latest_customers.mobile_phone %>
+                </p>
+              </div>
+            </div>
+            <p
+              id="created_at"
+              data-timestamp={latest_customers.created_at}
+              phx-hook="RelativeTime"
+              class="block text-sm text-muted-foreground text-center"
+            >
+              <%= latest_customers.created_at %>
+            </p>
+          </div>
+        </.link>
+      </div>
+    </div>
+  </div>
+  <div class="mb-8">
+    <h2 class="text-3xl gradient-colors text-center">Vendas Recentes</h2>
+    <p class="text-xs text-center">
+      Uma lista dos suas vendas mais recentes e quando eles foram comprados.
     </p>
   </div>
-  
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
-    <div class="rounded-lg border text-card-foreground shadow-sm" data-v0-t="card">
-      <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">
-          Faturamento Anual
-        </h3>
-         <img src="/images/money.svg" class="w-4 h-4  " />
-      </div>
-      
-      <div class="p-6">
-        <div class="text-2xl font-bold">R$</div>
-        
-        <p class="text-xs  ">+20.1% from last month</p>
-      </div>
-    </div>
-    
-    <div class="rounded-lg border  text-card-foreground shadow-sm" data-v0-t="card">
-      <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">
-          Faturamento Mensal
-        </h3>
-         <img src="/images/money.svg" class="w-4 h-4  " />
-      </div>
-      
-      <div class="p-6">
-        <div class="text-2xl font-bold">
-          R$
-        </div>
-        
-        <p class="text-xs  ">+15.2% from last month</p>
-      </div>
-    </div>
-    
-    <div
-      id="client-card"
-      class="rounded-lg border  text-card-foreground shadow-sm"
-      data-v0-t="card"
+  <div class="m-4 p-4 shadow border rounded-lg ">
+    <.table
+      id="latest-sales-id"
+      rows={@streams.latest_sales}
+      row_click={fn {_id, sale} -> JS.navigate(~p"/venda/#{sale.id}/mostrar") end}
     >
-      <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Clientes Anual</h3>
-         <img src="/images/costumers_card.svg" class="w-4 h-4  " />
-      </div>
-      
-      <div class="p-6">
-        <div class="text-2xl font-bold">0</div>
-        
-        <p class="text-xs  ">+180.1% from last month</p>
-      </div>
-    </div>
-    
-    <div class="rounded-lg border  text-card-foreground shadow-sm" data-v0-t="card">
-      <div class="space-y-1.5 p-6 flex flex-row items-center justify-between pb-2">
-        <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">
-          Clientes Mensais
-        </h3>
-         <img src="/images/costumers_card.svg" class="w-4 h-4  " />
-      </div>
-      
-      <div class="p-6">
-        <div class="text-2xl font-bold">0</div>
-        
-        <p class="text-xs  ">+201 since last month</p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="mt-6 pr-4">
-    <div class="flex justify-end" data-id="45">
-      <.link
-        patch={~p"/overview/new"}
-        class="inline-flex items-center justify-center text-white rounded-md bg-green-600 px-4 py-2 text-sm font-medium shadow transition-colors hover:bg-green-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600 dark:hover:bg-green-800 dark:focus-visible:ring-gray-300"
-        data-id="46"
-        href="#"
-        rel="ugc"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="w-4 h-4 mr-2"
-          data-id="47"
-        >
-          <path d="M5 12h14"></path>
-          
-          <path d="M12 5v14"></path>
-        </svg>
-        Novo Cliente
-      </.link>
-    </div>
-    
-    <div class="mt-6">
-      <div class="rounded-lg  text-card-foreground" data-v0-t="card">
-        <div class="flex flex-col space-y-1.5 p-6 text-center">
-          <h3 class="gradient-colors">
-            Clientes Recentes
-          </h3>
+      <:col :let={{_id, sale}} label="Identificação">
+        <span class="font-bold"><%= sale.id %></span>
+      </:col>
+      <:col :let={{_id, sale}} label="Nome">
+        <span class="font-semibold"><%= sale.customer_name %></span>
+        <div class="text-xs">
+          <%= sale.customer_mobile_phone %>
         </div>
-      </div>
-    </div>
+      </:col>
+      <:col :let={{_id, sale}} label="Processo">
+        <%= Utils.which_process(sale.which_process) %>
+      </:col>
+      <:col :let={{_id, sale}} label="Valor">
+        <%= sale.total_value %>
+      </:col>
+      <:col :let={{_id, sale}} label="Parcelas">
+        <%= sale.installment %>
+      </:col>
+      <:col :let={{_id, sale}} label="Forma Pagamento">
+        <%= Utils.which_payment(sale.which_payment) %>
+      </:col>
+      <:col :let={{_id, sale}} label="Situação Pagamento">
+        <%= Utils.formated_payment_status(sale.is_paid) %>
+      </:col>
+      <:col :let={{_id, sale}} label="Data Cadastro">
+        <%= Utils.formated_date(sale.created_at) %>
+      </:col>
+    </.table>
   </div>
 </AppWeb.FunctionComponents.GlobalStyle.global_style>
