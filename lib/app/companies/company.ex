@@ -39,7 +39,6 @@ defmodule App.Companies.Company do
 
     has_many(:users, User)
 
-    field(:deleted_at, :date, default: nil)
     timestamps(inserted_at: :created_at, type: :utc_datetime)
   end
 

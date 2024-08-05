@@ -22,10 +22,12 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import darkModeHook from "../vendor/dark_mode"
+import relativeTime from "../vendor/relative_time"
+
 
 let Hooks = {}
 Hooks.DarkThemeToggle = darkModeHook
-
+Hooks.RelativeTime = relativeTime
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,

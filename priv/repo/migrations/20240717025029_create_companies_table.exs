@@ -8,9 +8,9 @@ defmodule App.Repo.Migrations.CreateCompaniesTable do
       add :email, :string, null: false
       add :image_url, :string, default: "/images/default-user.svg"
       add :trading_name, :string, null: false
-      add :landline_phone, :string, size: 15, null: false, default: "Não informado"
+      add :landline_phone, :string, size: 20, null: false, default: "Não informado"
       add :legal_name, :string, null: false
-      add :mobile_phone, :string, size: 15, null: false
+      add :mobile_phone, :string, size: 20, null: false
       add :signature, :string, null: false
 
       # Company Owner Data
@@ -22,7 +22,7 @@ defmodule App.Repo.Migrations.CreateCompaniesTable do
       add :locality, :string, null: false, default: "Não informado"
       add :neighborhood, :string, null: false, default: "Não informado"
       add :state, :string, size: 2, null: false, default: "SP"
-      add :zip_code, :string, size: 9, null: false
+      add :zip_code, :string, size: 10, null: false
 
       # Company Payment Data
       add :is_signature_paid, :boolean, default: false

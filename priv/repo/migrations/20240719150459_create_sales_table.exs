@@ -13,7 +13,7 @@ defmodule App.Repo.Migrations.CreateSalesTable do
       add :is_paid, :boolean, null: false, default: false
 
       add(
-        :client_id,
+        :customer_id,
         references(:customers,
           type: :binary_id,
           on_delete: :delete_all,
@@ -22,11 +22,10 @@ defmodule App.Repo.Migrations.CreateSalesTable do
         null: false
       )
 
-      add :deleted_at, :string, null: true, default: nil
       timestamps(inserted_at: :created_at, type: :utc_datetime)
     end
 
-    create index(:sales, [:client_id])
+    create index(:sales, [:customer_id])
   end
 
   def down do

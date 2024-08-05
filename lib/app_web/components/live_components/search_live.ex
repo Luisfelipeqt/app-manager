@@ -46,6 +46,7 @@ defmodule AppWeb.LiveComponents.SearchLive do
         phx-key="escape"
       >
         <div class="fixed inset-0 bg-zinc-400/25 backdrop-blur-sm opacity-100"></div>
+
         <div class="fixed inset-0 overflow-y-auto px-4 py-4 sm:py-20 sm:px-6 md:py-32 lg:px-8 lg:py-[15vh]">
           <div
             id="searchbox_container"
@@ -112,7 +113,7 @@ defmodule AppWeb.LiveComponents.SearchLive do
                   <%= for find <- @search do %>
                     <li id={"#{find.id}"}>
                       <.link
-                        navigate={"/customer/#{find.id}/show"}
+                        navigate={"/cliente/#{find.id}/mostrar"}
                         class="block p-4 hover:bg-slate-300 focus:outline-none focus:bg-slate-100 focus:text-sky-800 dark:text-zinc-900 dark:md:hover:bg-purple-300"
                       >
                         <%= find.full_name %> - <%= find.cpf %>
