@@ -104,22 +104,24 @@ body {
 
 }
 
-/* Donations */
+/**/
+
+
 
 .footer {
-  @apply text-center  max-w-4xl mx-auto text-lg py-4;
+  @apply text-center bg-white max-w-4xl mx-auto text-lg py-8;
 }
 .footer .pagination {
   @apply inline-flex shadow-sm;
 }
 .footer a {
-  @apply -ml-px inline-flex items-center px-3 py-2 border text-base font-medium  no-underline;
+  @apply -ml-px inline-flex items-center px-3 py-2 border border-slate-300 bg-white text-base font-medium text-slate-600 no-underline;
 }
 .footer a:hover {
   @apply bg-slate-300;
 }
 .footer a.active {
-  @apply bg-indigo-700 ;
+  @apply bg-indigo-700 text-white;
 }
 .footer a:first-child {
   @apply rounded-l-md;
@@ -133,13 +135,13 @@ body {
 .footer a.next {
   @apply rounded-r-md;
 }
-.form {
-  @apply flex items-center justify-start mb-4 mt-4;
+#selection form {
+  @apply flex items-center justify-end mb-4;
 }
-.form select {
-  @apply appearance-none  border border-slate-400 text-slate-700 py-0 pr-7 mr-2 h-8 rounded-lg font-semibold cursor-pointer text-sm mx-1;
+#selection form select {
+  @apply appearance-none bg-slate-200 border border-slate-400 text-slate-700 py-0 pr-7 mr-2 h-8 rounded-lg font-semibold cursor-pointer text-sm mx-1;
 }
-.form select:focus {
+#selection form select:focus {
   @apply outline-none bg-slate-200 border-slate-500;
 }
 
