@@ -338,45 +338,260 @@
       </div>
     </div>
   </div>
-  <div class="mb-8">
-    <h2 class="text-3xl gradient-colors text-center">Vendas Recentes</h2>
-    <p class="text-xs text-center">
-      Uma lista dos suas vendas mais recentes e quando eles foram comprados.
-    </p>
-  </div>
-  <div class="m-4 p-4 shadow border rounded-lg ">
-    <.table
-      id="latest-sales-id"
-      rows={@streams.latest_sales}
-      row_click={fn {_id, sale} -> JS.navigate(~p"/venda/#{sale.id}/mostrar") end}
+  <div class="m-4 shadow">
+    <div
+      class="rounded-lg border bg-card text-card-foreground w-full"
+      data-id="1"
+      data-v0-t="card"
     >
-      <:col :let={{_id, sale}} label="Identificação">
-        <span class="font-bold"><%= sale.id %></span>
-      </:col>
-      <:col :let={{_id, sale}} label="Nome">
-        <span class="font-semibold"><%= sale.customer_name %></span>
-        <div class="text-xs">
-          <%= sale.customer_mobile_phone %>
+      <div class="flex flex-col space-y-1.5 p-6" data-id="2">
+        <h3
+          class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight text-center gradient-colors"
+          data-id="3"
+        >
+          Transações Recentes
+        </h3>
+        <p class="text-sm text-muted-foreground text-center" data-id="4">
+          Gerencie suas vendas e pagamentos de clientes.
+        </p>
+      </div>
+      <div class="p-6" data-id="5">
+        <div class="overflow-x-auto" data-id="6">
+          <form class="form" phx-change="select-per-page">
+            <select name="per-page">
+              <%= Phoenix.HTML.Form.options_for_select(
+                [10, 15, 25, 50],
+                @options.per_page
+              ) %>
+            </select>
+            <label class="text-gray-500 text-xs dark:text-gray-400" for="per-page">
+              por página
+            </label>
+          </form>
+
+          <div class="relative w-full overflow-auto">
+            <table class="caption-bottom text-sm w-full" data-id="7">
+              <thead class="[&amp;_tr]:border-b" data-id="8">
+                <tr
+                  class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted hidden md:table-row"
+                  data-id="9"
+                >
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="10"
+                  >
+                    <.sort_link sort_by={:id} options={@options}>
+                      #
+                    </.sort_link>
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="11"
+                  >
+                    Cliente
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="12"
+                  >
+                    <.sort_link sort_by={:which_process} options={@options}>
+                      Processo
+                    </.sort_link>
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="13"
+                  >
+                    <.sort_link sort_by={:total_value} options={@options}>
+                      Valor
+                    </.sort_link>
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="14"
+                  >
+                    <.sort_link sort_by={:which_payment} options={@options}>
+                      Forma de Pagamento
+                    </.sort_link>
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="15"
+                  >
+                    <.sort_link sort_by={:is_paid} options={@options}>
+                      Situação Pagamento
+                    </.sort_link>
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="16"
+                  >
+                    <.sort_link sort_by={:installment} options={@options}>
+                      Número de Parcelas
+                    </.sort_link>
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="17"
+                  >
+                    <.sort_link sort_by={:created_at} options={@options}>
+                      Data
+                    </.sort_link>
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="18"
+                  >
+                    <span data-id="19">Ação</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="sales"
+                phx-update="stream"
+                class="[&amp;_tr:last-child]:border-0"
+                data-id="20"
+              >
+                <tr
+                  :for={{id, sales} <- @streams.paginated_sales}
+                  id={id}
+                  class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted grid grid-cols-[repeat(2,1fr)] gap-4 md:table-row"
+                  data-id="21"
+                >
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium"
+                    data-id="22"
+                  >
+                    <%= sales.id %>
+                  </td>
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium"
+                    data-id="23"
+                  >
+                    <p><%= sales.customer_name %></p>
+                    <small class="text-xs text-muted"><%= sales.customer_mobile_phone %></small>
+                  </td>
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 md:table-cell"
+                    data-id="24"
+                  >
+                    <%= Utils.which_process(sales.sale_process) %>
+                  </td>
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 md:table-cell"
+                    data-id="25"
+                  >
+                    <%= sales.sale_value %>
+                  </td>
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 md:table-cell"
+                    data-id="26"
+                  >
+                    <%= Utils.which_payment(sales.sale_payment) %>
+                  </td>
+                  <%= if sales.sale_paid  do %>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-left">
+                      <div class="inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-green-600 ">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          class="h-3 w-3 -translate-x-1 animate-pulse fill-green-300 text-green-300"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                          >
+                          </path>
+                        </svg>
+                        <%= Utils.formated_payment_status(sales.sale_paid) %>
+                      </div>
+                    </td>
+                  <% else %>
+                    <td
+                      class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-left"
+                      data-id="108"
+                    >
+                      <div
+                        class="inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-red-600 "
+                        data-id="109"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="h-3 w-3 -translate-x-1 animate-pulse fill-red-300 text-red-300"
+                          data-id="110"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                        </svg>
+                        <%= Utils.formated_payment_status(sales.sale_paid) %>
+                      </div>
+                    </td>
+                  <% end %>
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 md:table-cell"
+                    data-id="29"
+                  >
+                    <%= sales.sale_installment %>
+                  </td>
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 md:table-cell"
+                    data-id="30"
+                  >
+                    <%= Utils.formated_date(sales.sale_created_at) %>
+                  </td>
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 md:table-cell"
+                    data-id="31"
+                  >
+                    <.link
+                      navigate={~p"/venda/#{sales.id}/mostrar"}
+                      data-id="32"
+                      class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-green-400"
+                      href="#"
+                      rel="ugc"
+                    >
+                      Mostrar
+                    </.link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="footer">
+              <div class="pagination">
+                <.link
+                  :if={@options.page > 1}
+                  patch={~p"/visao-geral?#{%{@options | page: @options.page - 1}}"}
+                >
+                  Previous
+                </.link>
+                <.link
+                  :for={
+                    {page_number, current_page?} <-
+                      pages(@options, @sales_count)
+                  }
+                  class={if current_page?, do: "active"}
+                  patch={~p"/visao-geral?#{%{@options | page: page_number}}"}
+                >
+                  <%= page_number %>
+                </.link>
+                <.link
+                  :if={more_pages?(@options, @sales_count)}
+                  patch={~p"/visao-geral?#{%{@options | page: @options.page + 1}}"}
+                >
+                  Next
+                </.link>
+              </div>
+            </div>
+          </div>
         </div>
-      </:col>
-      <:col :let={{_id, sale}} label="Processo">
-        <%= Utils.which_process(sale.which_process) %>
-      </:col>
-      <:col :let={{_id, sale}} label="Valor">
-        <%= sale.total_value %>
-      </:col>
-      <:col :let={{_id, sale}} label="Parcelas">
-        <%= sale.installment %>
-      </:col>
-      <:col :let={{_id, sale}} label="Forma Pagamento">
-        <%= Utils.which_payment(sale.which_payment) %>
-      </:col>
-      <:col :let={{_id, sale}} label="Situação Pagamento">
-        <%= Utils.formated_payment_status(sale.is_paid) %>
-      </:col>
-      <:col :let={{_id, sale}} label="Data Cadastro">
-        <%= Utils.formated_date(sale.created_at) %>
-      </:col>
-    </.table>
+      </div>
+    </div>
   </div>
 </AppWeb.FunctionComponents.GlobalStyle.global_style>

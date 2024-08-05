@@ -53,6 +53,11 @@ defmodule App.Sales.Sale do
     |> assoc_constraint(:customer, message: "cliente não encontrado")
   end
 
+  def updated_changeset(sale, attrs) do
+    sale
+    |> cast(attrs, all_fields())
+  end
+
   defp validations(changeset, attrs) do
     changeset
     |> validate_required(attrs, message: "campo obrigatório")

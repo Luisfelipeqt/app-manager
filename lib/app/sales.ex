@@ -4,6 +4,37 @@ defmodule App.Sales do
   alias App.Repo
   alias App.Sales.Sale
 
+  def sales_count(company_id) do
+    from(sale in Sale)
+    |> join(:left, [sale], customer in assoc(sale, :customer))
+    |> where([sale], sale.exemption == false)
+    |> where([_, customer], customer.company_id == ^company_id)
+    |> Repo.aggregate(:count, :id)
+  end
+
+  def paginated_sales(options, company_id) when is_map(options) do
+    from(sale in Sale)
+    |> join(:left, [sale], customer in assoc(sale, :customer))
+    |> select(
+      [sale, customer],
+      %{
+        id: sale.id,
+        sale_process: sale.which_process,
+        sale_value: sale.total_value,
+        sale_payment: sale.which_payment,
+        sale_paid: sale.is_paid,
+        sale_created_at: sale.created_at,
+        sale_installment: sale.installment,
+        customer_name: customer.full_name,
+        customer_mobile_phone: customer.mobile_phone
+      }
+    )
+    |> where([sale, customer], customer.company_id == ^company_id)
+    |> sort(options)
+    |> paginate(options)
+    |> Repo.all()
+  end
+
   def find_sales_by_customer_id(customer_id, company_id) do
     from(s in Sale)
     |> join(:left, [s], c in assoc(s, :customer))
@@ -140,9 +171,7 @@ defmodule App.Sales do
 
   def get_sale!(sale_id) do
     from(s in Sale)
-    |> join(:left, [s], c in assoc(s, :customer))
     |> where([s], s.id == ^sale_id)
-    |> order_by([s], desc: s.created_at)
     |> Repo.one()
   end
 

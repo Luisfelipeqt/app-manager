@@ -89,4 +89,12 @@ defmodule App.Utils do
         "#{day}/#{month}/#{year}"
     end
   end
+
+  def formated_installment(installment) do
+    case installment do
+      nil -> "Não há parcelas em aberto"
+      0 -> "À vista"
+      value -> "#{value}x"
+    end
+  end
 end

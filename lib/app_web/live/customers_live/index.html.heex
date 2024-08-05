@@ -284,29 +284,105 @@
               </p>
             </div>
           </div>
-          <.table
-            id="sales"
-            rows={@streams.sales}
-            row_click={fn {_id, sale} -> JS.navigate(~p"/sale/#{sale.id}") end}
-          >
-            <:col :let={{_id, sale}} label="Identificação" class="font-bold">
-              <%= sale.id %>
-            </:col>
-            <:col :let={{_id, sale}} label="Processo">
-              <%= Utils.which_process(sale.which_process) %>
-            </:col>
-            <:col :let={{_id, sale}} label="Valor"><%= sale.total_value %></:col>
-            <:col :let={{_id, sale}} label="Tipo Pagamento">
-              <%= Utils.which_payment(sale.which_payment) %>
-            </:col>
-            <:col :let={{_id, sale}} label="Parcelas"><%= sale.installment %></:col>
-            <:col :let={{_id, sale}} label="Situação Pagamento">
-              <%= Utils.formated_payment_status(sale.is_paid) %>
-            </:col>
-            <:col :let={{_id, sale}} label="Data">
-              <%= Utils.formated_date(sale.created_at) %>
-            </:col>
-          </.table>
+          <table class="w-full caption-bottom text-sm ">
+            <thead class="[&amp;_tr]:border-b">
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Identificação
+                </th>
+                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Processo
+                </th>
+                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Valor
+                </th>
+                <th class="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right">
+                  Tipo Pagamento
+                </th>
+                <th class="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right">
+                  Parcelas
+                </th>
+                <th class="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right">
+                  Situação Pagamento
+                </th>
+                <th class="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right">
+                  Data
+                </th>
+              </tr>
+            </thead>
+            <tbody id="sales" phx-update="stream" class="[&amp;_tr:last-child]:border-0">
+              <tr
+                :for={{sale_id, sale} <- @streams.sales}
+                id={sale_id}
+                class="border-b cursor-pointer hover:bg-zinc-200 dark:md:hover:bg-purple-600"
+                phx-click={JS.navigate(~p"/venda/#{sale.id}/mostrar")}
+              >
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="font-medium"><%= sale.id %></div>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <%= Utils.which_process(sale.which_process) %>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <%= sale.total_value %>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                  <%= Utils.which_payment(sale.which_payment) %>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
+                  <%= Utils.formated_installment(sale.installment) %>
+                </td>
+                <%= if sale.is_paid do %>
+                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                    <button phx-click="toggle-state" phx-value-id={sale.id}>
+                      <div class="text-end inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-green-600">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="h-3 w-3 -translate-x-1 animate-pulse fill-green-300 text-green-300"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                        </svg>
+                        <%= Utils.formated_payment_status(sale.is_paid) %>
+                      </div>
+                    </button>
+                  </td>
+                <% else %>
+                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                    <button phx-click="toggle-state" phx-value-id={sale.id}>
+                      <div class="inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-red-600">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="h-3 w-3 -translate-x-1 animate-pulse fill-red-300 text-red-300"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                        </svg>
+                        <%= Utils.formated_payment_status(sale.is_paid) %>
+                      </div>
+                    </button>
+                  </td>
+                <% end %>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
+                  <%= Utils.formated_date(sale.created_at) %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
