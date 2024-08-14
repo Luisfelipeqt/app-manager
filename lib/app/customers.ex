@@ -4,6 +4,22 @@ defmodule App.Customers do
   alias App.Repo
   alias App.Customers.Customer
 
+  def customers_count(company_id) do
+    from(customer in Customer)
+    |> where([customer], is_nil(customer.deleted_at))
+    |> where([customer], customer.company_id == ^company_id)
+    |> Repo.aggregate(:count, :id)
+  end
+
+  def paginated_customers(options, company_id) when is_map(options) and is_binary(company_id) do
+    from(customer in Customer)
+    |> where([customer], is_nil(customer.deleted_at))
+    |> where([customer], customer.company_id == ^company_id)
+    |> sort(options)
+    |> paginate(options)
+    |> Repo.all()
+  end
+
   def latest_customers(company_id) do
     from(c in Customer)
     |> where([c], c.company_id == ^company_id)
@@ -68,7 +84,27 @@ defmodule App.Customers do
 
     from(c in Customer)
     |> where([c], ilike(c.full_name, ^search_term))
+    |> or_where([c], ilike(c.cpf, ^search_term))
+    |> or_where([c], ilike(c.email, ^search_term))
     |> select([c], %{id: c.id, full_name: c.full_name, cpf: c.cpf})
     |> Repo.all()
+
+    # dbg(Ecto.Adapters.SQL.explain(Repo, :all, query))
   end
+
+  defp sort(query, %{sort_by: sort_by, sort_order: sort_order}) do
+    order_by(query, {^sort_order, ^sort_by})
+  end
+
+  defp sort(query, _options), do: query
+
+  defp paginate(query, %{page: page, per_page: per_page}) do
+    offset = max((page - 1) * per_page, 0)
+
+    query
+    |> limit(^per_page)
+    |> offset(^offset)
+  end
+
+  defp paginate(query, _options), do: query
 end
