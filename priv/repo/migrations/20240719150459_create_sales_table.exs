@@ -16,7 +16,7 @@ defmodule App.Repo.Migrations.CreateSalesTable do
         :customer_id,
         references(:customers,
           type: :binary_id,
-          on_delete: :delete_all,
+          on_delete: :nothing,
           on_update: :update_all
         ),
         null: false

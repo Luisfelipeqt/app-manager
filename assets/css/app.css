@@ -109,13 +109,13 @@ body {
 
 
 .footer {
-  @apply text-center bg-white max-w-4xl mx-auto text-lg py-8;
+  @apply text-center  max-w-4xl mx-auto text-lg py-8;
 }
 .footer .pagination {
   @apply inline-flex shadow-sm;
 }
 .footer a {
-  @apply -ml-px inline-flex items-center px-3 py-2 border border-slate-300 bg-white text-base font-medium text-slate-600 no-underline;
+  @apply -ml-px inline-flex items-center px-3 py-2 border border-slate-300 text-base font-medium  no-underline;
 }
 .footer a:hover {
   @apply bg-slate-300;

@@ -60,7 +60,7 @@ defmodule App.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:brcpfcnpj, "~> 1.0.0"},
-      {:ecto_ulid, "~> 0.2.0"},
+      {:ecto_ulid, "~> 0.3.0"},
       {:money, "~> 1.12"},
       {:timex, "~> 3.0"},
       {:faker, "~> 0.18"}

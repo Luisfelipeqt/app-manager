@@ -2,43 +2,105 @@ defmodule AppWeb.FunctionComponents.GlobalStyle do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
+  use Phoenix.VerifiedRoutes,
+    router: AppWeb.Router,
+    endpoint: AppWeb.Endpoint
+
   attr :current_user, :any, required: true
-  attr :overview, :any, required: true
-  attr :customers, :any, required: true
-  attr :salesview, :any, required: true
-  attr :logout, :any, required: true
   slot :inner_block, required: true
 
   def global_style(assigns) do
     ~H"""
-    <div class="flex h-full">
+    <div class="flex h-screen">
       <aside class="bg-background border-r border-border flex flex-col w-64 shrink-0 p-4">
         <!-- Sidebar content goes here -->
-        <.link class="" navigate={@overview}>
+        <.link navigate={~p"/visao-geral"}>
           <img src="/images/e-Gestão.svg" class="" />
         </.link>
 
         <nav class="flex flex-col gap-2 mt-12">
           <.link
-            class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-gray-200 hover:text-foreground"
-            href="#"
+            class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-green-600/75 dark:hover:bg-rose-600/75 hover:text-foreground"
+            navigate={~p"/visao-geral"}
           >
-            <AppWeb.CoreComponents.icon name="hero-squares-2x2" />Painel de Controle
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+            >
+                <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+                <rect
+                width="7"
+                height="5"
+                x="14"
+                y="3"
+                rx="1"
+              ></rect>
+                <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+                <rect
+                width="7"
+                height="5"
+                x="3"
+                y="16"
+                rx="1"
+              ></rect>
+              </svg>Painel de Controle
           </.link>
 
-          <a
-            class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-gray-200 hover:text-foreground"
-            href="#"
+          <.link
+            class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-green-600/75 dark:hover:bg-rose-600/75 hover:text-foreground"
+            navigate={~p"/clientes/mostrar"}
           >
-            <AppWeb.CoreComponents.icon name="hero-user-group" />Clientes
-          </a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+            >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle
+                cx="9"
+                cy="7"
+                r="4"
+              ></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>Clientes
+          </.link>
 
-          <a
-            class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-gray-200 hover:text-foreground"
-            href="#"
+          <.link
+            class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground hover:bg-green-600/75 dark:hover:bg-rose-600/75 hover:text-foreground"
+            navigate={~p"/vendas/mostrar"}
           >
-            <AppWeb.CoreComponents.icon name="hero-shopping-cart" />Vendas
-          </a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+            >
+                <line x1="12" x2="12" y1="2" y2="22"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>Vendas
+          </.link>
         </nav>
       </aside>
 
@@ -114,7 +176,7 @@ defmodule AppWeb.FunctionComponents.GlobalStyle do
 
                   <li>
                     <.link
-                      href={@logout}
+                      href={~p"/users/log_out"}
                       method="delete"
                       data-confirm="Deseja sair?"
                       class="block px-4 py-2 text-sm hover:bg-gray-100 dark:md:hover:bg-purple-600"

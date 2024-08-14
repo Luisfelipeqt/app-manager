@@ -28,7 +28,7 @@ r_tech_solutions =
     locality: "São Luis",
     neighborhood: "Cohama",
     state: "MA",
-    signature: :admin
+    signature: :superadmin
   }
 
 solutions_company = App.Repo.insert!(r_tech_solutions)
@@ -75,7 +75,7 @@ for _ <- 1..5000 do
     locality: Faker.Address.PtBr.city(),
     neighborhood: Faker.Address.PtBr.neighborhood(),
     state: Faker.Address.PtBr.state_abbr(),
-    zip_code: Faker.Address.PtBr.zip_code(),
+    zip_code: Enum.random(~w(65067-197 65067-198 65067-199 65067-200 65067-201)),
     created_at:
       DateTime.truncate(
         Faker.DateTime.between(~U[2016-01-01T00:00:00Z], ~U[2024-08-03T00:00:00Z]),
@@ -86,35 +86,35 @@ for _ <- 1..5000 do
 
   customer_inserted = App.Repo.insert!(customer)
 
-  sale = %App.Sales.Sale{
-    installment: Enum.random(1..12),
-    total_value: Enum.random(8_000..150_000),
-    which_payment: Enum.random(~w(boleto credito debito dinheiro pix promissoria)a),
-    which_process: Enum.random(~w(
-    adicao_categoria_b
-    aula_extra
-    curso_teorico
-    primeira_habilitacao_a
-    primeira_habilitacao_b
-    primeira_habilitacao_ab
-    reabilitacao
-    reciclagem
-    repetencia_a
-    repetencia_b
-    repetencia_ab
-    repetencia_teorica
-    renovacao_cnh
-    outro
-  )a),
-    quantity: Enum.random(1..5),
-    is_paid: Enum.random([true, false]),
-    created_at:
+  attrs = %{
+    "total_value" => Enum.random(100..1500) |> Integer.to_string(),
+    "installment" => Enum.random(1..12) |> Integer.to_string(),
+    "which_payment" => Enum.random(~w(boleto credito debito dinheiro pix promissoria)a),
+    "which_process" => Enum.random(~w(
+      adicao_categoria_b
+      aula_extra
+      curso_teorico
+      primeira_habilitacao_a
+      primeira_habilitacao_b
+      primeira_habilitacao_ab
+      reabilitacao
+      reciclagem
+      repetencia_a
+      repetencia_b
+      repetencia_ab
+      repetencia_teorica
+      renovacao_cnh
+      outro
+    )a),
+    "is_paid" => Enum.random([true, false]),
+    "exemption" => false,
+    "customer_id" => customer_inserted.id,
+    "created_at" =>
       DateTime.truncate(
         Faker.DateTime.between(~U[2016-01-01T00:00:00Z], ~U[2024-08-03T00:00:00Z]),
         :second
-      ),
-    customer_id: customer_inserted.id
+      )
   }
 
-  sale_inserted = App.Repo.insert!(sale)
+  sale_inserted = App.Sales.create_sale(attrs)
 end

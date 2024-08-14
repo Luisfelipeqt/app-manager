@@ -11,7 +11,7 @@ defmodule App.Repo.Migrations.CreateInstallmentsTable do
 
       add(
         :sale_id,
-        references(:sales, type: :binary_id, on_delete: :delete_all, on_update: :update_all),
+        references(:sales, type: :binary_id, on_delete: :nothing, on_update: :update_all),
         null: false
       )
 

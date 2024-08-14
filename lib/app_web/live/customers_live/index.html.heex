@@ -1,10 +1,4 @@
-<AppWeb.FunctionComponents.GlobalStyle.global_style
-  current_user={@current_user}
-  overview={~p"/visao-geral"}
-  customers={~p"/customers"}
-  salesview={~p"/salesview"}
-  logout={~p"/users/log_out"}
->
+<AppWeb.FunctionComponents.GlobalStyle.global_style current_user={@current_user}>
   <div class="flex-1 p-6">
     <.link
       class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input hover:bg-zinc-100 hover:text-accent-foreground h-10 w-10"
@@ -25,21 +19,22 @@
         class="h-4 w-4 "
       >
         <path d="m12 19-7-7 7-7"></path>
-
+        
         <path d="M19 12H5"></path>
       </svg>
-      <span class="sr-only " data-id="40">Back</span>
+       <span class="sr-only " data-id="40">Back</span>
     </.link>
+    
     <div class="flex items-center justify-center">
       <div class="text-center">
         <h2 class="gradient-colors">
           Perfil
         </h2>
+        
         <p class="text-gray-500 text-xs dark:text-gray-400">
           Visualize e gerencie as informações do seu cliente.
         </p>
-        <br />
-        <span class="text-base">Última Atualização</span>
+         <br /> <span class="text-base">Última Atualização</span>
         <span
           id="updated-at"
           data-timestamp={@customer.updated_at}
@@ -49,6 +44,7 @@
         </span>
       </div>
     </div>
+    
     <div class="mt-6 ">
       <div class="flex items-center gap-4" data-id="2">
         <span class="relative flex h-20 w-20 overflow-hidden" data-id="3">
@@ -59,8 +55,10 @@
             src={@customer.image_url}
           />
         </span>
+        
         <div data-id="6" class="grid gap-1">
           <div class="font-semibold text-2xl" data-id="7"><%= @customer.full_name %></div>
+          
           <div
             :if={@customer.mobile_phone != nil}
             class="text-sm text-gray-500 dark:text-gray-400"
@@ -70,9 +68,10 @@
           </div>
         </div>
       </div>
+      
       <div class="flex justify-end " data-id="45">
         <.link
-          patch={~p"/customer/#{0}/show/edit"}
+          patch={~p"/cliente/#{@customer.id}/mostrar/editar"}
           class="inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-green-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600  dark:hover:bg-green-800 dark:focus-visible:ring-gray-300"
           data-id="46"
           href="#"
@@ -92,12 +91,13 @@
             data-id="47"
           >
             <path d="M5 12h14"></path>
-
+            
             <path d="M12 5v14"></path>
           </svg>
           Editar Cliente
         </.link>
       </div>
+      
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 ">
         <div class="grid gap-2">
           <label
@@ -106,7 +106,7 @@
           >
             CPF
           </label>
-
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="cpf"
@@ -114,6 +114,7 @@
             value={@customer.cpf}
           />
         </div>
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -121,6 +122,7 @@
           >
             Email
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="email"
@@ -128,6 +130,7 @@
             value={@customer.email}
           />
         </div>
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -135,6 +138,7 @@
           >
             Sexo
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="sexo"
@@ -142,6 +146,7 @@
             value={Utils.format_gender(@customer.gender)}
           />
         </div>
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -149,6 +154,7 @@
           >
             Data de Nascimento
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="nascimento"
@@ -156,7 +162,7 @@
             value={Utils.format_birthday(@customer.birthday)}
           />
         </div>
-
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -164,6 +170,7 @@
           >
             Endereço
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="address"
@@ -171,7 +178,7 @@
             value={@customer.address}
           />
         </div>
-
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -179,6 +186,7 @@
           >
             Bairro
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="neighborhood"
@@ -186,6 +194,7 @@
             value={@customer.neighborhood}
           />
         </div>
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -193,6 +202,7 @@
           >
             Cidade
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="city"
@@ -200,6 +210,7 @@
             value={@customer.locality}
           />
         </div>
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -207,6 +218,7 @@
           >
             Estado
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="state"
@@ -214,6 +226,7 @@
             value={@customer.state}
           />
         </div>
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -221,6 +234,7 @@
           >
             CEP
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="cep"
@@ -228,6 +242,7 @@
             value={@customer.zip_code}
           />
         </div>
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -235,6 +250,7 @@
           >
             Identificador do Cliente
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="id"
@@ -242,7 +258,7 @@
             value={@customer.id}
           />
         </div>
-
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -250,6 +266,7 @@
           >
             Data de Cadastro
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="created_at"
@@ -257,6 +274,7 @@
             value={Utils.format_birthday(@customer.created_at)}
           />
         </div>
+        
         <div class="grid gap-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -264,6 +282,7 @@
           >
             Última Atualização
           </label>
+          
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3"
             id="created_at-two"
@@ -272,71 +291,203 @@
           />
         </div>
       </div>
-      <div class="rounded-lg overflow-hidden p-6 shadow mt-4">
-        <div class="relative w-full overflow-auto">
-          <div class="flex items-center justify-center mb-4">
-            <div class="text-center">
-              <h2 class="gradient-colors">
-                Historico de Compra
-              </h2>
-              <p class="text-gray-500 text-xs dark:text-gray-400">
-                Visualize e gerencie as compras de seu cliente
-              </p>
-            </div>
-          </div>
-          <table class="w-full caption-bottom text-sm ">
-            <thead class="[&amp;_tr]:border-b">
-              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Identificação
-                </th>
-                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Processo
-                </th>
-                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Valor
-                </th>
-                <th class="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right">
-                  Tipo Pagamento
-                </th>
-                <th class="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right">
-                  Parcelas
-                </th>
-                <th class="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right">
-                  Situação Pagamento
-                </th>
-                <th class="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right">
-                  Data
-                </th>
-              </tr>
-            </thead>
-            <tbody id="sales" phx-update="stream" class="[&amp;_tr:last-child]:border-0">
-              <tr
-                :for={{sale_id, sale} <- @streams.sales}
-                id={sale_id}
-                class="border-b cursor-pointer hover:bg-zinc-200 dark:md:hover:bg-purple-600"
-                phx-click={JS.navigate(~p"/venda/#{sale.id}/mostrar")}
+    </div>
+  </div>
+  
+  <div
+    class="rounded-lg border bg-card text-card-foreground shadow-sm m-4"
+    data-id="1"
+    data-v0-t="card"
+  >
+    <div class="flex flex-col space-y-1.5 p-6 px-7" data-id="2">
+      <h3
+        class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight gradient-colors text-center"
+        data-id="3"
+      >
+        Trasações Realizadas pelo Cliente
+      </h3>
+      
+      <p class="text-sm text-muted-foreground text-center" data-id="4">
+        Veja todo o histórico de compras do cliente.
+      </p>
+    </div>
+    
+    <div class="p-6 " data-id="5">
+      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8" data-id="6">
+        <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8" data-id="7">
+          <div class="relative w-full overflow-auto">
+            <table class="caption-bottom text-sm w-full" data-id="8">
+              <thead class="[&amp;_tr]:border-b" data-id="9">
+                <tr
+                  class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                  data-id="10"
+                >
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                    data-id="11"
+                  >
+                    Identificação
+                  </th>
+                  
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="12"
+                  >
+                    Processo
+                  </th>
+                  
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell"
+                    data-id="13"
+                  >
+                    Valor
+                  </th>
+                  
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                    data-id="14"
+                  >
+                    Tipo Pagamento
+                  </th>
+                  
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                    data-id="15"
+                  >
+                    Números de Parcelas
+                  </th>
+                  
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                    data-id="16"
+                  >
+                    Situação Pagamento
+                  </th>
+                  
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                    data-id="17"
+                  >
+                    Data
+                  </th>
+                  
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                    data-id="17"
+                  >
+                    Ação
+                  </th>
+                </tr>
+              </thead>
+              
+              <tbody
+                id="sales"
+                phx-update="stream"
+                class="[&amp;_tr:last-child]:border-0"
+                data-id="18"
               >
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <div class="font-medium"><%= sale.id %></div>
-                </td>
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <%= Utils.which_process(sale.which_process) %>
-                </td>
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <%= sale.total_value %>
-                </td>
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
-                  <%= Utils.which_payment(sale.which_payment) %>
-                </td>
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
-                  <%= Utils.formated_installment(sale.installment) %>
-                </td>
-                <%= if sale.is_paid do %>
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
-                    <button phx-click="toggle-state" phx-value-id={sale.id}>
-                      <div class="text-end inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-green-600">
+                <tr
+                  :for={{sale_id, sale} <- @streams.sales}
+                  id={sale_id}
+                  class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                  data-id="19"
+                >
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium hidden sm:table-cell"
+                    data-id="20"
+                  >
+                    <%= sale.id %>
+                  </td>
+                  
+                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="21">
+                    <%= Utils.which_process(sale.which_process) %>
+                  </td>
+                  
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell"
+                    data-id="22"
+                  >
+                    <%= sale.total_value %>
+                  </td>
+                  
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                    data-id="23"
+                  >
+                    <%= Utils.which_payment(sale.which_payment) %>
+                  </td>
+                  
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                    data-id="24"
+                  >
+                    <%= Utils.formated_installment(sale.installment) %>
+                  </td>
+                  
+                  <%= if sale.is_paid do %>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="25">
+                      <button phx-click="toggle-state" phx-value-id={sale.id}>
+                        <div class="text-end inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-green-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="h-3 w-3 -translate-x-1 animate-pulse fill-green-300 text-green-300"
+                          >
+                            <circle cx="12" cy="12" r="10"></circle>
+                          </svg>
+                           <%= Utils.formated_payment_status(sale.is_paid) %>
+                        </div>
+                      </button>
+                    </td>
+                  <% else %>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="25">
+                      <button phx-click="toggle-state" phx-value-id={sale.id}>
+                        <div class="inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-red-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="h-3 w-3 -translate-x-1 animate-pulse fill-red-300 text-red-300"
+                          >
+                            <circle cx="12" cy="12" r="10"></circle>
+                          </svg>
+                           <%= Utils.formated_payment_status(sale.is_paid) %>
+                        </div>
+                      </button>
+                    </td>
+                  <% end %>
+                  
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                    data-id="27"
+                  >
+                    <%= Utils.formated_date(sale.created_at) %>
+                  </td>
+                  
+                  <td
+                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                    data-id="27"
+                  >
+                    <.link navigate={~p"/venda/#{sale.id}/mostrar"}>
+                      <button
+                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 hover:bg-green-600/75"
+                        data-id="24"
+                      >
                         <svg
+                          data-id="25"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
                           height="24"
@@ -346,43 +497,20 @@
                           stroke-width="2"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          class="h-3 w-3 -translate-x-1 animate-pulse fill-green-300 text-green-300"
+                          class="h-4 w-4"
                         >
-                          <circle cx="12" cy="12" r="10"></circle>
+                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                          
+                          <circle cx="12" cy="12" r="3"></circle>
                         </svg>
-                        <%= Utils.formated_payment_status(sale.is_paid) %>
-                      </div>
-                    </button>
+                         <span class="sr-only" data-id="26">Mostrar</span>
+                      </button>
+                    </.link>
                   </td>
-                <% else %>
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
-                    <button phx-click="toggle-state" phx-value-id={sale.id}>
-                      <div class="inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-red-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="h-3 w-3 -translate-x-1 animate-pulse fill-red-300 text-red-300"
-                        >
-                          <circle cx="12" cy="12" r="10"></circle>
-                        </svg>
-                        <%= Utils.formated_payment_status(sale.is_paid) %>
-                      </div>
-                    </button>
-                  </td>
-                <% end %>
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
-                  <%= Utils.formated_date(sale.created_at) %>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

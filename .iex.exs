@@ -5,3 +5,5 @@ alias App.Sales
 alias App.Sales.Sale
 alias App.Companies
 alias App.Companies.Company
+alias App.Installments
+alias App.Installments.Installment
