@@ -30,6 +30,11 @@ defmodule App.Installments.Installment do
     |> assoc_constraint(:sale, message: "venda não encontrada")
   end
 
+  def update_changeset(installment, attrs) do
+    installment
+    |> cast(attrs, all_fields())
+  end
+
   defp validate_money(changeset, field) do
     validate_change(changeset, field, fn
       _, %Money{amount: amount} when amount > 0 -> []

@@ -17,17 +17,18 @@ defmodule AppWeb.CustomersLive.Index do
   end
 
   def handle_event("toggle-state", %{"id" => id}, socket) do
-    sale = Sales.get_sale!(id)
+    company_id = socket.assigns.current_user.company_id
+
+    sale = Sales.get_sale(id)
+    dbg(sale)
 
     Sales.update_sale(
       sale,
       %{is_paid: !sale.is_paid}
     )
 
-    company_id = socket.assigns.current_user.company_id
-
     socket
-    |> stream(:sales, Sales.find_sales_by_customer_id(sale.customer_id, company_id))
+    |> stream(:sales, Sales.find_sales_by_customer_id(sale.customer_id, company_id), reset: true)
     |> noreply()
   end
 end

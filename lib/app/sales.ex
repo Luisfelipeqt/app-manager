@@ -3,6 +3,46 @@ defmodule App.Sales do
   require Logger
   alias App.Repo
   alias App.Sales.Sale
+  alias App.Installments.Installment
+
+  def create_sale(attrs \\ %{}) do
+    {:ok, total_value} = Money.parse(attrs["total_value"], :BRL)
+
+    attrs = %{
+      attrs
+      | "total_value" => total_value.amount,
+        "installment" => attrs["installment"],
+        "customer_id" => attrs["customer_id"]
+    }
+
+    Repo.transaction(fn ->
+      {:ok, sale} =
+        %Sale{}
+        |> Sale.create_changeset(attrs)
+        |> Repo.insert()
+
+      total_value_in_cents = total_value.amount
+      installment_count = String.to_integer(attrs["installment"])
+
+      installment_value_in_cents =
+        Money.divide(Money.new(total_value_in_cents), installment_count)
+        |> List.last()
+        |> Map.get(:amount)
+
+      Enum.each(1..installment_count, fn installment_number ->
+        expiration_date = Date.add(Date.utc_today(), installment_number * 31)
+
+        %Installment{}
+        |> Installment.create_changeset(%{
+          sale_id: sale.id,
+          installment_number: installment_number,
+          value: installment_value_in_cents,
+          expiration_date: expiration_date
+        })
+        |> Repo.insert()
+      end)
+    end)
+  end
 
   def sales_count(company_id) do
     from(sale in Sale)
@@ -169,7 +209,38 @@ defmodule App.Sales do
     |> Repo.aggregate(:sum, :total_value)
   end
 
-  def get_sale!(sale_id) do
+  def get_sale(sale_id, company_id) do
+    from(s in Sale)
+    |> join(:left, [s], c in assoc(s, :customer))
+    |> where([s], s.id == ^sale_id)
+    |> where([s], s.exemption == false)
+    |> where([_, c], c.company_id == ^company_id)
+    |> where([_, c], is_nil(c.deleted_at))
+    |> select(
+      [s, c],
+      %{
+        customer_id: c.id,
+        customer_name: c.full_name,
+        customer_mobile_phone: c.mobile_phone,
+        customer_email: c.email,
+        customer_address: c.address,
+        customer_locality: c.locality,
+        customer_neighborhood: c.neighborhood,
+        customer_state: c.state,
+        sale_id: s.id,
+        sale_created_at: s.created_at,
+        sale_value: s.total_value,
+        sale_installment: s.installment,
+        sale_payment: s.which_payment,
+        sale_paid: s.is_paid,
+        sale_quantity: s.quantity,
+        sale_process: s.which_process
+      }
+    )
+    |> Repo.one()
+  end
+
+  def get_sale(sale_id) do
     from(s in Sale)
     |> where([s], s.id == ^sale_id)
     |> Repo.one()

@@ -48,6 +48,7 @@ defmodule App.Sales.Sale do
   def create_changeset(sale, attrs) do
     sale
     |> cast(attrs, all_fields())
+    |> validate_money(:total_value)
     |> validations(all_fields() -- @optionals)
     |> cast_assoc(:installments, with: &Installment.create_changeset/2)
     |> assoc_constraint(:customer, message: "cliente não encontrado")
@@ -61,7 +62,6 @@ defmodule App.Sales.Sale do
   defp validations(changeset, attrs) do
     changeset
     |> validate_required(attrs, message: "campo obrigatório")
-    |> validate_money(:total_value)
     |> validate_number(:quantity, greater_than: 0)
     |> validate_number(:installment, greater_than: 0)
     |> validate_inclusion(:which_payment, @which_payment, message: "método de pagamento inválido")

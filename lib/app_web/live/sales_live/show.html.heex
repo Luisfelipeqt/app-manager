@@ -1,0 +1,290 @@
+<AppWeb.FunctionComponents.GlobalStyle.global_style current_user={@current_user}>
+  <div class="flex-1 p-6 shadow">
+    <.link
+      class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input hover:bg-zinc-100 hover:text-accent-foreground h-10 w-10"
+      data-id="38"
+      navigate={~p"/visao-geral"}
+    >
+      <svg
+        data-id="39"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-4 w-4 "
+      >
+        <path d="m12 19-7-7 7-7"></path>
+
+        <path d="M19 12H5"></path>
+      </svg>
+      <span class="sr-only " data-id="40">Voltar</span>
+    </.link>
+    <div class="flex items-center justify-center">
+      <div class="text-center">
+        <h2 class="gradient-colors">
+          Todas as suas Vendas
+        </h2>
+        <p class="text-gray-500 text-xs dark:text-gray-400">
+          Visualize e gerencie todas as suas vendas.
+        </p>
+      </div>
+    </div>
+    <div class="rounded-lg overflow-hidden shadow-md">
+      <div class="relative w-full overflow-auto mt-4">
+        <div class="flex justify-end">
+          <form class="form " phx-change="select-per-page">
+            <select
+              name="per-page"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <%= Phoenix.HTML.Form.options_for_select(
+                [10, 15, 25, 50],
+                @options.per_page
+              ) %>
+            </select>
+
+            <label class="block mb-2 text-xs font-medium" for="per-page">
+              por página
+            </label>
+          </form>
+        </div>
+        <table class="caption-bottom text-sm w-full" data-id="7">
+          <thead class="[&amp;_tr]:border-b" data-id="8">
+            <tr
+              class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted hidden md:table-row"
+              data-id="9"
+            >
+              <th
+                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                data-id="10"
+              >
+                <.sort_link sort_by={:id} options={@options}>
+                  Identificação
+                </.sort_link>
+              </th>
+
+              <th
+                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                data-id="11"
+              >
+                Cliente
+              </th>
+
+              <th
+                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                data-id="12"
+              >
+                <.sort_link sort_by={:which_process} options={@options}>
+                  Processo
+                </.sort_link>
+              </th>
+
+              <th
+                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                data-id="13"
+              >
+                <.sort_link sort_by={:total_value} options={@options}>
+                  Valor
+                </.sort_link>
+              </th>
+
+              <th
+                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                data-id="14"
+              >
+                <.sort_link sort_by={:which_payment} options={@options}>
+                  Forma de Pagamento
+                </.sort_link>
+              </th>
+              <th
+                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                data-id="16"
+              >
+                <.sort_link sort_by={:installment} options={@options}>
+                  Número de Parcelas
+                </.sort_link>
+              </th>
+              <th
+                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                data-id="15"
+              >
+                <.sort_link sort_by={:is_paid} options={@options}>
+                  Situação Pagamento
+                </.sort_link>
+              </th>
+              <th
+                class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                data-id="17"
+              >
+                <.sort_link sort_by={:created_at} options={@options}>
+                  Data
+                </.sort_link>
+              </th>
+              <th
+                class="h-12 px-4 text-left align-end font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                data-id="18"
+              >
+                <span data-id="19">Ação</span>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody
+            id="sales"
+            phx-update="stream"
+            class="[&amp;_tr:last-child]:border-0"
+            data-id="18"
+          >
+            <tr
+              :for={{id, sales} <- @streams.paginated_sales}
+              id={id}
+              class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+              data-id="19"
+            >
+              <td
+                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium hidden sm:table-cell select-all"
+                data-id="20"
+              >
+                <%= sales.id %>
+              </td>
+
+              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="21">
+                <p class="text-base font-semibold"><%= sales.customer_name %></p>
+                <p class="text-xs select-all"><%= sales.customer_mobile_phone %></p>
+              </td>
+              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="21">
+                <%= Utils.which_process(sales.sale_process) %>
+              </td>
+              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="21">
+                <p class="text-base font-semibold text-green-600"><%= sales.sale_value %></p>
+              </td>
+
+              <td
+                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell"
+                data-id="22"
+              >
+                <%= Utils.which_payment(sales.sale_payment) %>
+              </td>
+
+              <td
+                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                data-id="23"
+              >
+                <%= sales.sale_installment %>
+              </td>
+
+              <%= if sales.sale_paid do %>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="25">
+                  <div class="text-end inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-green-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="h-3 w-3 -translate-x-1 animate-pulse fill-green-300 text-green-300"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                    <%= Utils.formated_payment_status(sales.sale_paid) %>
+                  </div>
+                </td>
+              <% else %>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="25">
+                  <div class="inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-red-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="h-3 w-3 -translate-x-1 animate-pulse fill-red-300 text-red-300"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                    <%= Utils.formated_payment_status(sales.sale_paid) %>
+                  </div>
+                </td>
+              <% end %>
+
+              <td
+                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
+                data-id="27"
+              >
+                <%= Utils.formated_date(sales.sale_created_at) %>
+              </td>
+
+              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-left">
+                <.link navigate={~p"/venda/#{sales.id}/mostrar"}>
+                  <button
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 hover:bg-green-600/75"
+                    data-id="24"
+                  >
+                    <svg
+                      data-id="25"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="h-4 w-4"
+                    >
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <span class="sr-only" data-id="26">Mostrar</span>
+                  </button>
+                </.link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="footer">
+          <div class="pagination">
+            <.link
+              :if={@options.page > 1}
+              patch={~p"/vendas/mostrar?#{%{@options | page: @options.page - 1}}"}
+            >
+              Anterior
+            </.link>
+
+            <.link
+              :for={
+                {page_number, current_page?} <-
+                  pages(@options, @sales_count)
+              }
+              class={if current_page?, do: "active"}
+              patch={~p"/vendas/mostrar?#{%{@options | page: page_number}}"}
+            >
+              <%= page_number %>
+            </.link>
+
+            <.link
+              :if={more_pages?(@options, @sales_count)}
+              patch={~p"/vendas/mostrar?#{%{@options | page: @options.page + 1}}"}
+            >
+              Próximo
+            </.link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</AppWeb.FunctionComponents.GlobalStyle.global_style>
