@@ -1,0 +1,6 @@
+<div id={@id} class="w-[40%] mt-6 text-white font-medium py-2 px-4 rounded outline-none">
+  <header class="text-center font-semibold antialiased leading-8">
+    <%= render_slot(@inner_block) %>
+  </header>
+  <canvas id="chart-canvas" phx-hook="LineChart" data-chart-data={@chart_data}></canvas>
+</div>

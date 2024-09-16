@@ -34,9 +34,9 @@ defmodule AppWeb.LiveComponents.SearchLive do
           </svg>
           Buscar
         </button>
-        <.text />
+         <.text />
       </div>
-
+      
       <div
         id="searchbar-dialog"
         class="hidden fixed inset-0 z-50"
@@ -46,7 +46,7 @@ defmodule AppWeb.LiveComponents.SearchLive do
         phx-key="escape"
       >
         <div class="fixed inset-0 bg-zinc-400/25 backdrop-blur-sm opacity-100"></div>
-
+        
         <div class="fixed inset-0 overflow-y-auto px-4 py-4 sm:py-20 sm:px-6 md:py-32 lg:px-8 lg:py-[15vh]">
           <div
             id="searchbox_container"
@@ -81,7 +81,7 @@ defmodule AppWeb.LiveComponents.SearchLive do
                     >
                     </path>
                   </svg>
-
+                  
                   <input
                     id="search-input"
                     name="search[query]"
@@ -103,7 +103,7 @@ defmodule AppWeb.LiveComponents.SearchLive do
                     tabindex="0"
                   />
                 </div>
-
+                
                 <ul
                   :if={@search != []}
                   class="divide-y divide-slate-200 overflow-y-auto rounded-b-lg border-t border-slate-200 text-sm leading-6"

@@ -23,7 +23,7 @@ defmodule App.Repo.Migrations.CreateCompaniesTable do
       add :address, :string, null: false, default: "Não informado"
       add :locality, :string, null: false, default: "Não informado"
       add :neighborhood, :string, null: false, default: "Não informado"
-      add :state, :string, size: 2, null: false, default: "SP"
+      add :state, :string, size: 2, null: false
       add :zip_code, :string, size: 9, null: false
 
       # Company Payment Data

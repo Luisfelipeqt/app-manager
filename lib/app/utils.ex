@@ -21,7 +21,7 @@ defmodule App.Utils do
     end
   end
 
-  def which_year(date) do
+  def which_month(date) do
     case date do
       1 -> "Janeiro"
       2 -> "Fevereiro"
@@ -35,12 +35,12 @@ defmodule App.Utils do
       10 -> "Outubro"
       11 -> "Novembro"
       12 -> "Dezembro"
-      "Nenhum" -> "N/A!"
-      _ -> "N/A!"
+      nil -> nil
+      _ -> "N/A"
     end
   end
 
-  def which_process(process) do
+  def format_process(process) do
     case process do
       :adicao_categoria_b -> "Adição de Categoria B"
       :aula_extra -> "Aula Extra"
@@ -56,10 +56,11 @@ defmodule App.Utils do
       :repetencia_teorica -> "Repetência Teórica"
       :renovacao_cnh -> "Renovação CNH"
       :outro -> "Outro"
+      _ -> "N/A"
     end
   end
 
-  def which_payment(payment) do
+  def format_payment(payment) do
     case payment do
       :boleto -> "Boleto"
       :credito -> "Crédito"
@@ -67,12 +68,12 @@ defmodule App.Utils do
       :dinheiro -> "Dinheiro"
       :pix -> "Pix"
       :promissoria -> "Promissória"
+      _ -> "N/A"
     end
   end
 
-  def formated_payment_status(status) do
+  def format_payment_status(status) do
     case status do
-      nil -> "Não há"
       true -> "Pago"
       false -> "Pendente"
     end
@@ -90,10 +91,11 @@ defmodule App.Utils do
     end
   end
 
-  def formated_installment(installment) do
+  def format_installment(installment) do
     case installment do
       nil -> "Não há parcelas em aberto"
-      0 -> "À vista"
+      0 -> "Não existe parcelamento"
+      1 -> "À vista"
       value -> "#{value}x"
     end
   end

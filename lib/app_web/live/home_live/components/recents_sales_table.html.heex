@@ -1,0 +1,77 @@
+<!-- Recent Sales Card -->
+<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+  <div class="bg-slate-200 p-4">
+    <h2 class="text-white text-xl font-semibold flex items-center justify-center ">
+      <p class="gradient-colors">Vendas Recentes</p>
+    </h2>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="bg-gray-50">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Processo
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Valor
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Forma de Pagamento
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Parcelamento
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Status
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Data da Compra
+          </th>
+        </tr>
+      </thead>
+      <tbody id="sales" phx-update="stream" class="bg-white divide-y divide-gray-200">
+        <tr
+          :for={{dom_id, sale} <- @sales}
+          id={dom_id}
+          phx-click={JS.navigate(~p"/venda/#{sale.id}/mostrar")}
+          class="hover:bg-indigo-300 cursor-pointer"
+        >
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="text-sm font-medium text-blue-600 ">
+              <%= Utils.format_process(sale.which_process) %>
+            </span>
+          </td>
+
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">
+              <p class="text-base font-semibold leading-6 text-green-600">
+                <%= sale.total_value %>
+              </p>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-base font-semibold text-gray-500">
+            <%= Utils.format_payment(sale.which_payment) %>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <p class="text-sm font-medium text-violet-600">
+              <%= Utils.format_installment(sale.installment) %>
+            </p>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class={[
+              "px-2 inline-flex text-xs leading-5 font-semibold rounded-full",
+              (sale.is_paid && "bg-green-100 text-green-800") || "bg-red-100 text-red-800 "
+            ]}>
+              <%= Utils.format_payment_status(sale.is_paid) %>
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <span :if={@timezone} class="text-xs text-gray-500">
+              <%= message_timestamp(sale, @timezone) %>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

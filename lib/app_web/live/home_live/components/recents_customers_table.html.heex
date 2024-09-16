@@ -1,0 +1,68 @@
+<!-- Recent Sales Card -->
+<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+  <div class="bg-slate-200 p-4">
+    <h2 class="text-white text-xl font-semibold flex items-center justify-center ">
+      <p class="gradient-colors">Clientes Recentes</p>
+    </h2>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="bg-gray-50">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Cliente
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Cpf
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Telefone
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Registrado
+          </th>
+        </tr>
+      </thead>
+      <tbody id="sales" phx-update="stream" class="bg-white divide-y divide-gray-200">
+        <tr
+          :for={{dom_id, customer} <- @customers}
+          id={dom_id}
+          phx-click={JS.navigate(~p"/cliente/#{customer.id}/mostrar")}
+          class="hover:bg-indigo-300 cursor-pointer"
+        >
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10">
+                <img
+                  class="h-10 w-10 rounded-full"
+                  src={customer.image_url}
+                  alt={customer.full_name}
+                />
+              </div>
+              <div class="ml-4">
+                <p class="text-base font-medium text-gray-900"><%= customer.full_name %></p>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <p class="text-sm font-medium">
+              <%= customer.cpf %>
+            </p>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">
+              <p class="text-base font-semibold leading-6 text-green-600">
+                <%= customer.mobile_phone %>
+              </p>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <span :if={@timezone} class="text-xs text-gray-500">
+              <%= message_timestamp(customer, @timezone) %>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

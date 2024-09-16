@@ -3,6 +3,7 @@ defmodule App.Customers do
   require Logger
   alias App.Repo
   alias App.Customers.Customer
+  alias App.Accounts.User
 
   def customers_count(company_id) do
     from(customer in Customer)
@@ -20,12 +21,12 @@ defmodule App.Customers do
     |> Repo.all()
   end
 
-  def latest_customers(company_id) do
-    from(c in Customer)
+  def latest_customers(%User{company_id: company_id}) do
+    Customer
     |> where([c], c.company_id == ^company_id)
     |> where([c], is_nil(c.deleted_at))
     |> order_by([c], desc: c.created_at)
-    |> limit(8)
+    |> limit(10)
     |> Repo.all()
   end
 

@@ -2,8 +2,25 @@ defmodule App.Sales do
   import Ecto.Query, warn: false
   require Logger
   alias App.Repo
+  alias App.Accounts.User
   alias App.Sales.Sale
+  alias App.Companies
   alias App.Installments.Installment
+
+  @topic inspect(__MODULE__)
+  @pubsub App.PubSub
+
+  def subscribe do
+    Phoenix.PubSub.subscribe(@pubsub, @topic)
+  end
+
+  def broadcast({:ok, client}, tag) do
+    Phoenix.PubSub.broadcast(@pubsub, @topic, {tag, client})
+
+    {:ok, client}
+  end
+
+  def broadcast({:error, _changeset} = error, _tag), do: error
 
   def create_sale(attrs \\ %{}) do
     {:ok, total_value} = Money.parse(attrs["total_value"], :BRL)
@@ -20,6 +37,7 @@ defmodule App.Sales do
         %Sale{}
         |> Sale.create_changeset(attrs)
         |> Repo.insert()
+        |> broadcast(:sale_created)
 
       total_value_in_cents = total_value.amount
       installment_count = String.to_integer(attrs["installment"])
@@ -98,7 +116,7 @@ defmodule App.Sales do
     |> Repo.all()
   end
 
-  def latest_sales(company_id) do
+  def latest_sales(%User{company_id: company_id}) do
     from(s in Sale)
     |> join(:left, [s], c in assoc(s, :customer))
     |> select(
@@ -106,18 +124,17 @@ defmodule App.Sales do
       %{
         id: s.id,
         customer_name: c.full_name,
-        customer_mobile_phone: c.mobile_phone,
         which_process: s.which_process,
         total_value: s.total_value,
         which_payment: s.which_payment,
+        installment: s.installment,
         is_paid: s.is_paid,
-        created_at: s.created_at,
-        installment: s.installment
+        created_at: s.created_at
       }
     )
     |> where([s, c], c.company_id == ^company_id)
     |> order_by([s], desc: s.created_at)
-    |> limit(5)
+    |> limit(10)
     |> Repo.all()
   end
 
@@ -153,13 +170,47 @@ defmodule App.Sales do
     |> Repo.one()
   end
 
+  def chart_sold_sales_year_not_paid(company_id) do
+    year = Timex.now().year
+
+    from(s in Sale)
+    |> join(:left, [s], c in assoc(s, :customer))
+    |> where([_, c], c.company_id == ^company_id)
+    |> where([s, _], s.exemption == false)
+    |> where([s, _], s.is_paid == false)
+    |> where([s, _], fragment("EXTRACT(YEAR FROM ?)", s.created_at) == ^year)
+    |> group_by([s, _], fragment("EXTRACT(MONTH FROM ?)", s.created_at))
+    |> select([s, _], %{
+      month: fragment("EXTRACT(MONTH FROM ?)", s.created_at),
+      total_value_sum: sum(s.total_value)
+    })
+    |> Repo.all()
+  end
+
+  def chart_sold_sales_year_paid(company_id) do
+    year = Timex.now().year
+
+    from(s in Sale)
+    |> join(:left, [s], c in assoc(s, :customer))
+    |> where([_, c], c.company_id == ^company_id)
+    |> where([s, _], s.exemption == false)
+    |> where([s, _], s.is_paid == true)
+    |> where([s, _], fragment("EXTRACT(YEAR FROM ?)", s.created_at) == ^year)
+    |> group_by([s, _], fragment("EXTRACT(MONTH FROM ?)", s.created_at))
+    |> select([s, _], %{
+      month: fragment("EXTRACT(MONTH FROM ?)", s.created_at),
+      total_value_sum: sum(s.total_value)
+    })
+    |> Repo.all()
+  end
+
   def most_sold_process_year(company_id) do
     start_of_year = Timex.beginning_of_year(NaiveDateTime.utc_now())
     end_of_year = Timex.end_of_year(NaiveDateTime.utc_now())
 
     from(s in Sale)
     |> join(:left, [s], c in assoc(s, :customer))
-    |> where([s, c], c.company_id == ^company_id and s.exemption == false)
+    |> where([s, c], c.company_id == ^company_id)
     |> where([s], s.exemption == false)
     |> where([c], c.created_at >= ^start_of_year and c.created_at <= ^end_of_year)
     |> group_by([s], s.which_process)
@@ -175,7 +226,7 @@ defmodule App.Sales do
 
     from(s in Sale)
     |> join(:left, [s], c in assoc(s, :customer))
-    |> where([s, c], c.company_id == ^company_id and s.exemption == false)
+    |> where([s, c], c.company_id == ^company_id)
     |> where([s], s.exemption == false)
     |> where([c], c.created_at >= ^start_of_month and c.created_at <= ^end_of_month)
     |> group_by([s], s.which_process)
@@ -193,6 +244,7 @@ defmodule App.Sales do
     |> join(:left, [s], c in assoc(s, :customer))
     |> where([s, c], c.company_id == ^company_id)
     |> where([s], s.exemption == false)
+    |> where([s], s.is_paid == true)
     |> where([s], s.created_at >= ^start_of_year and s.created_at <= ^end_of_year)
     |> Repo.aggregate(:sum, :total_value)
   end
@@ -204,7 +256,9 @@ defmodule App.Sales do
     from(s in Sale)
     |> join(:left, [s], c in assoc(s, :customer))
     |> where([s], s.exemption == false)
-    |> where([s, c], c.company_id == ^company_id and s.exemption == false)
+    |> where([s, c], c.company_id == ^company_id)
+    |> where([s, c], s.exemption == false)
+    |> where([s], s.is_paid == true)
     |> where([c], c.created_at >= ^start_of_month and c.created_at <= ^end_of_month)
     |> Repo.aggregate(:sum, :total_value)
   end
@@ -267,4 +321,8 @@ defmodule App.Sales do
   end
 
   defp paginate(query, _options), do: query
+
+  def change_sale(%Sale{} = sale, attrs \\ %{}) do
+    Sale.create_changeset(sale, attrs)
+  end
 end

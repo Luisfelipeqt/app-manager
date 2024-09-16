@@ -42,24 +42,6 @@ defmodule App.Repo.Migrations.CreateCustomersTable do
         ON customers
         USING gin (full_name gin_trgm_ops);
     """
-
-    execute """
-      CREATE INDEX customers_cpf_gin_trgm_idx
-        ON customers
-        USING gin (cpf gin_trgm_ops);
-    """
-
-    execute """
-      CREATE INDEX customers_email_gin_trgm_idx
-        ON customers
-        USING gin (email gin_trgm_ops);
-    """
-
-    execute """
-    CREATE INDEX customers_mobile_phone_gin_trgm_idx
-      ON customers
-      USING gin (mobile_phone gin_trgm_ops);
-    """
   end
 
   def down do

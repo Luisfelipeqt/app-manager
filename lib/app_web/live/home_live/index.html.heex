@@ -9,644 +9,182 @@
     </div>
   </div>
 
-  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mx-4">
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-      <.async_result :let={sales_year} assign={@sales_year}>
-        <:loading>
-          <.loading_state />
-        </:loading>
-
-        <:failed :let={_failure}>
-          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
-            <div class="mx-auto max-w-md text-center">
-              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Opa, algo deu errado!
-              </h1>
-
-              <p class="text-white">
-                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
-              </p>
-            </div>
-          </div>
-        </:failed>
-
-        <div class="p-6 text-center">
-          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
-            Receita Anual
-          </h3>
-
-          <p class=" text-sm">A soma total de todas as vendas realizadas</p>
-
-          <div class="text-2xl font-bold text-green-600">
-            <%= sales_year %>
-          </div>
-
-          <p class="text-xs text-muted-foreground">
-            Referente ao ano de <%= Date.utc_today().year %>
-          </p>
-        </div>
-      </.async_result>
-    </div>
-
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-      <.async_result :let={sales_month} assign={@sales_month}>
-        <:loading>
-          <.loading_state />
-        </:loading>
-
-        <:failed :let={_failure}>
-          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
-            <div class="mx-auto max-w-md text-center">
-              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Opa, algo deu errado!
-              </h1>
-
-              <p class="text-white">
-                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
-              </p>
-            </div>
-          </div>
-        </:failed>
-
-        <div class="p-6 text-center">
-          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
-            Receita Mensal
-          </h3>
-
-          <p class=" text-sm">A soma total de todas as vendas realizadas</p>
-
-          <div class="text-2xl font-bold text-green-600">
-            <%= sales_month %>
-          </div>
-
-          <p class="text-xs text-muted-foreground">
-            Referente ao mês de <%= Utils.which_year(Date.utc_today().month) %>
-          </p>
-        </div>
-      </.async_result>
-    </div>
-
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-      <.async_result :let={customers_year} assign={@customers_year}>
-        <:loading>
-          <.loading_state />
-        </:loading>
-
-        <:failed :let={_failure}>
-          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
-            <div class="mx-auto max-w-md text-center">
-              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Opa, algo deu errado!
-              </h1>
-
-              <p class="text-white">
-                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
-              </p>
-            </div>
-          </div>
-        </:failed>
-
-        <div class="p-6 text-center">
-          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
-            Clientes Anual
-          </h3>
-
-          <p class=" text-sm">O número total de clientes registrados</p>
-
-          <div class="text-2xl font-bold text-green-600">
-            <%= customers_year %>
-          </div>
-
-          <p class="text-xs text-muted-foreground">
-            Referente ao ano de <%= Date.utc_today().year %>
-          </p>
-        </div>
-      </.async_result>
-    </div>
-
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-      <.async_result :let={customers_month} assign={@customers_month}>
-        <:loading>
-          <.loading_state />
-        </:loading>
-
-        <:failed :let={_failure}>
-          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
-            <div class="mx-auto max-w-md text-center">
-              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Opa, algo deu errado!
-              </h1>
-
-              <p class="text-white">
-                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
-              </p>
-            </div>
-          </div>
-        </:failed>
-
-        <div class="p-6 text-center">
-          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
-            Clientes Mensais
-          </h3>
-
-          <p class=" text-sm">O número total de clientes registrados</p>
-
-          <div class="text-2xl font-bold text-green-600">
-            <%= customers_month %>
-          </div>
-
-          <p class="text-xs text-muted-foreground">
-            Referente ao mês de <%= Utils.which_year(Date.utc_today().month) %>
-          </p>
-        </div>
-      </.async_result>
-    </div>
-
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm h-full" data-v0-t="card">
-      <.async_result :let={most_sold_process_year} assign={@most_sold_process_year}>
-        <:loading>
-          <.loading_state />
-        </:loading>
-
-        <:failed :let={_failure}>
-          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
-            <div class="mx-auto max-w-md text-center">
-              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Opa, algo deu errado!
-              </h1>
-
-              <p class="text-white">
-                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
-              </p>
-            </div>
-          </div>
-        </:failed>
-
-        <div class="p-6 text-center">
-          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
-            Processo em Destaque
-          </h3>
-
-          <p class=" text-sm">O processo mais comercializado</p>
-
-          <p class="text-2xl font-bold text-green-600">
-            <%= Utils.which_process(most_sold_process_year.which_process) %>
-          </p>
-
-          <p class="text-xs">
-            Foram vendidos - <%= most_sold_process_year.count_process %>
-          </p>
-
-          <p class="text-xs text-muted-foreground ">
-            Referente ao ano de <%= Date.utc_today().year %>
-          </p>
-        </div>
-      </.async_result>
-    </div>
-
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm h-full" data-v0-t="card">
-      <.async_result :let={most_sold_process_month} assign={@most_sold_process_month}>
-        <:loading>
-          <.loading_state />
-        </:loading>
-
-        <:failed :let={_failure}>
-          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
-            <div class="mx-auto max-w-md text-center">
-              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Opa, algo deu errado!
-              </h1>
-
-              <p class="text-white">
-                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
-              </p>
-            </div>
-          </div>
-        </:failed>
-
-        <div class="p-6 text-center">
-          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
-            Processo em Destaque
-          </h3>
-
-          <p class=" text-sm">O processo mais comercializado</p>
-
-          <p class="text-2xl font-bold text-green-600">
-            <%= Utils.which_process(most_sold_process_month.which_process) %>
-          </p>
-
-          <p class="text-xs">
-            Foram vendidos - <%= most_sold_process_month.count_process %>
-          </p>
-
-          <p class="text-xs text-muted-foreground ">
-            Referente ao mês de <%= Utils.which_year(Date.utc_today().month) %>
-          </p>
-        </div>
-      </.async_result>
-    </div>
-
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm h-full" data-v0-t="card">
-      <.async_result :let={most_payment_method_year} assign={@most_payment_method_year}>
-        <:loading>
-          <.loading_state />
-        </:loading>
-
-        <:failed :let={_failure}>
-          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
-            <div class="mx-auto max-w-md text-center">
-              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Opa, algo deu errado!
-              </h1>
-
-              <p class="text-white">
-                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
-              </p>
-            </div>
-          </div>
-        </:failed>
-
-        <div class="p-6 text-center">
-          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
-            Principal forma de Pagamento
-          </h3>
-
-          <p class=" text-sm">O processo mais comercializado</p>
-
-          <p class="text-2xl font-bold text-green-600">
-            <%= Utils.which_payment(most_payment_method_year.which_payment) %>
-          </p>
-
-          <p class="text-xs">
-            Foram usados - <%= most_payment_method_year.count_payment %>
-          </p>
-
-          <p class="text-xs text-muted-foreground ">
-            Referente ao ano de <%= Date.utc_today().year %>
-          </p>
-        </div>
-      </.async_result>
-    </div>
-
-    <div class="rounded-lg border bg-card text-card-foreground shadow-sm h-full" data-v0-t="card">
-      <.async_result :let={most_payment_method_month} assign={@most_payment_method_month}>
-        <:loading>
-          <.loading_state />
-        </:loading>
-
-        <:failed :let={_failure}>
-          <div class="flex flex-col items-center justify-center bg-red-500 h-full rounded-lg">
-            <div class="mx-auto max-w-md text-center">
-              <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Opa, algo deu errado!
-              </h1>
-
-              <p class="text-white">
-                Oops, algo deu errado. Tente novamente em alguns instantes, por favor.
-              </p>
-            </div>
-          </div>
-        </:failed>
-
-        <div class="p-6 text-center">
-          <h3 class="whitespace-nowrap tracking-tight text-xl font-medium text-amber-700/75">
-            Principal forma de Pagamento
-          </h3>
-
-          <p class=" text-sm">O processo mais comercializado</p>
-
-          <p class="text-2xl font-bold text-green-600">
-            <%= Utils.which_payment(most_payment_method_month.which_payment) %>
-          </p>
-
-          <p class="text-xs">
-            Foram usados - <%= most_payment_method_month.count_payment %>
-          </p>
-
-          <p class="text-xs text-muted-foreground ">
-            Referente ao mês de <%= Utils.which_year(Date.utc_today().month) %>
-          </p>
-        </div>
-      </.async_result>
-    </div>
-  </div>
-
-  <div class="container mx-auto px-4 md:px-6 py-12">
-    <div class="mb-8">
-      <h2 class="text-3xl gradient-colors text-center">Clientes Recentes</h2>
-
-      <p class="text-xs text-center">
-        Uma lista dos seus clientes mais recentes e quando eles foram cadastrados.
+  <div class="flex md:flex-row w-full mb-4 justify-around">
+    <.chart chart_data={Jason.encode!(@chart_data_paid)} id="charting-paid">
+      <span class="text-green-600">Referente ao ano de <%= DateTime.utc_now().year %></span>
+      <p class="text-xs text-black">
+        Receitas recebidos de pagamentos efetuados.
       </p>
-    </div>
+    </.chart>
+    <.chart chart_data={Jason.encode!(@chart_data_not_paid)} id="charting-not-paid">
+      <span class="text-red-600">Referente ao ano de <%= DateTime.utc_now().year %></span>
+      <p class="text-xs text-black">
+        Receitas não recebidas, de pagamentos ainda não efetuados.
+      </p>
+    </.chart>
+  </div>
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mx-4">
+    <.card_information>
+      <:header>
+        Receita Anual
+      </:header>
 
-    <div
-      id="customer-card-id"
-      phx-update="stream"
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full"
-    >
-      <div
-        :for={{customer_id, latest_customers} <- @streams.latest_customers}
-        id={customer_id}
-        class="bg-background rounded-lg shadow border overflow-hidden hover:bg-green-600/75 dark:hover:bg-rose-600/75 cursor-pointer"
-      >
-        <.link navigate={~p"/cliente/#{latest_customers.id}/mostrar"}>
-          <div class="p-6">
-            <div class="flex items-center gap-4 mb-4 ">
-              <span class="relative flex shrink-0 overflow-hidden rounded-full w-12 h-12 border">
-                <img
-                  class="aspect-square h-full w-full"
-                  alt="John Doe"
-                  src={latest_customers.image_url}
-                />
-              </span>
+      <:section>
+        A soma total de todas as vendas realizadas
+      </:section>
 
-              <div>
-                <h3 class="text-lg font-semibold"><%= latest_customers.full_name %></h3>
+      <:main>
+        <%= @sales_year %>
+      </:main>
 
-                <p class="text-muted-foreground text-sm"><%= latest_customers.email %></p>
+      <:footer>
+        Referente ao ano de <%= Date.utc_today().year %>
+      </:footer>
+    </.card_information>
 
-                <p class="text-muted-foreground text-sm">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="w-4 h-4 inline-block mr-1"
-                  >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                    </path>
-                  </svg>
-                  <%= latest_customers.mobile_phone %>
-                </p>
-              </div>
-            </div>
+    <.card_information>
+      <:header>
+        Receita Mensal
+      </:header>
 
-            <p
-              id="created_at"
-              data-timestamp={latest_customers.created_at}
-              phx-hook="RelativeTime"
-              class="block text-sm text-muted-foreground text-center"
-            >
-              <%= latest_customers.created_at %>
-            </p>
-          </div>
-        </.link>
-      </div>
-    </div>
+      <:section>
+        A soma total de todas as vendas realizadas
+      </:section>
+
+      <:main>
+        <%= @sales_month %>
+      </:main>
+
+      <:footer>
+        Referente ao mês de <%= Utils.which_month(Date.utc_today().month) %>
+      </:footer>
+    </.card_information>
+
+    <.card_information>
+      <:header>
+        Clientes Anual
+      </:header>
+
+      <:section>
+        O número total de clientes registrados
+      </:section>
+
+      <:main>
+        <%= @customers_year || 0 %>
+      </:main>
+
+      <:footer>
+        Referente ao ano de <%= Date.utc_today().year %>
+      </:footer>
+    </.card_information>
+
+    <.card_information>
+      <:header>
+        Clientes Mensal
+      </:header>
+
+      <:section>
+        O número total de clientes registrados ao mês
+      </:section>
+
+      <:main>
+        <%= @customers_month || 0 %>
+      </:main>
+
+      <:footer>
+        Referente ao mês de <%= Utils.which_month(Date.utc_today().month) %>
+      </:footer>
+    </.card_information>
+
+    <.card_information>
+      <:header>
+        Processo em Destaque
+      </:header>
+
+      <:section>
+        Processo em destaque ao ano
+      </:section>
+
+      <:main>
+        <%= Utils.format_process(@most_sold_process_year.which_process) %>
+      </:main>
+
+      <:footer>
+        Referente ao ano de <%= Date.utc_today().year %>
+      </:footer>
+    </.card_information>
+
+    <.card_information>
+      <:header>
+        Processo em Destaque
+      </:header>
+
+      <:section>
+        Processo em destaque ao mês
+      </:section>
+
+      <:main>
+        <%= Utils.format_process(@most_sold_process_month.which_process) %>
+      </:main>
+
+      <:footer>
+        Referente ao mês de <%= Utils.which_month(Date.utc_today().month) %>
+      </:footer>
+    </.card_information>
+
+    <.card_information>
+      <:header>
+        Processo em Destaque
+      </:header>
+
+      <:section>
+        Processo em destaque ao mês
+      </:section>
+
+      <:main>
+        <%= Utils.format_payment(@most_payment_method_year.which_payment) %>
+      </:main>
+
+      <:footer>
+        Referente ao ano de <%= Date.utc_today().year %>
+      </:footer>
+    </.card_information>
+
+    <.card_information>
+      <:header>
+        Processo em Destaque
+      </:header>
+
+      <:section>
+        Processo em destaque ao mês
+      </:section>
+
+      <:main>
+        <%= Utils.format_payment(@most_payment_method_month.which_payment) %>
+      </:main>
+
+      <:footer>
+        Referente ao ano de <%= Utils.which_month(Date.utc_today().month) %>
+      </:footer>
+    </.card_information>
   </div>
 
-  <div class="m-4 shadow">
-    <div
-      class="rounded-lg border bg-card text-card-foreground w-full"
-      data-id="1"
-      data-v0-t="card"
-    >
-      <div class="flex flex-col space-y-1.5 p-6" data-id="2">
-        <h3
-          class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight text-center gradient-colors"
-          data-id="3"
-        >
-          Transações Recentes
-        </h3>
-
-        <p class="text-sm text-muted-foreground text-center" data-id="4">
-          Gerencie suas vendas e pagamentos de clientes.
-        </p>
+  <div class="p-4 w-full">
+    <h1 class="text-3xl font-bold text-center gradient-colors">
+      Clientes e Vendas Recentes.
+    </h1>
+    <p class="text-xs text-center">
+      Visualize os clientes e vendas mais recentes.
+    </p>
+    <!-- Flex container for the tables -->
+    <div class="flex flex-col lg:flex-row justify-between gap-4 mt-4">
+      <!-- Tabela de clientes -->
+      <div class="w-full lg:w-1/2">
+        <.recents_customers_table customers={@streams.customers} timezone={@timezone} />
       </div>
-
-      <div class="p-6" data-id="5">
-        <div class="flex justify-end">
-          <form class="form " phx-change="select-per-page">
-            <select
-              name="per-page"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <%= Phoenix.HTML.Form.options_for_select(
-                [10, 15, 25, 50],
-                @options.per_page
-              ) %>
-            </select>
-
-            <label class="block mb-2 text-sm font-medium" for="per-page">
-              por página
-            </label>
-          </form>
-        </div>
-        <div class="flex justify-end" data-id="6">
-          <div class="relative w-full overflow-auto">
-            <table class="caption-bottom text-sm w-full" data-id="7">
-              <thead class="[&amp;_tr]:border-b" data-id="8">
-                <tr
-                  class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted hidden md:table-row"
-                  data-id="9"
-                >
-                  <th
-                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                    data-id="10"
-                  >
-                    <.sort_link sort_by={:id} options={@options}>
-                      Identificação
-                    </.sort_link>
-                  </th>
-
-                  <th
-                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                    data-id="11"
-                  >
-                    Cliente
-                  </th>
-
-                  <th
-                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                    data-id="12"
-                  >
-                    <.sort_link sort_by={:which_process} options={@options}>
-                      Processo
-                    </.sort_link>
-                  </th>
-
-                  <th
-                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                    data-id="13"
-                  >
-                    <.sort_link sort_by={:total_value} options={@options}>
-                      Valor
-                    </.sort_link>
-                  </th>
-
-                  <th
-                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                    data-id="14"
-                  >
-                    <.sort_link sort_by={:which_payment} options={@options}>
-                      Forma de Pagamento
-                    </.sort_link>
-                  </th>
-                  <th
-                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                    data-id="16"
-                  >
-                    <.sort_link sort_by={:installment} options={@options}>
-                      Número de Parcelas
-                    </.sort_link>
-                  </th>
-                  <th
-                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                    data-id="15"
-                  >
-                    <.sort_link sort_by={:is_paid} options={@options}>
-                      Situação Pagamento
-                    </.sort_link>
-                  </th>
-                  <th
-                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                    data-id="17"
-                  >
-                    <.sort_link sort_by={:created_at} options={@options}>
-                      Data
-                    </.sort_link>
-                  </th>
-                  <th
-                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                    data-id="18"
-                  >
-                    <span data-id="19">Ação</span>
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody
-                id="sales"
-                phx-update="stream"
-                class="[&amp;_tr:last-child]:border-0"
-                data-id="18"
-              >
-                <tr
-                  :for={{id, sales} <- @streams.paginated_sales}
-                  id={id}
-                  class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-                  data-id="19"
-                >
-                  <td
-                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium hidden sm:table-cell"
-                    data-id="20"
-                  >
-                    <%= sales.id %>
-                  </td>
-
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="21">
-                    <p class="text-base font-semibold"><%= sales.customer_name %></p>
-                    <p class="text-xs select-all"><%= sales.customer_mobile_phone %></p>
-                  </td>
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="21">
-                    <%= Utils.which_process(sales.sale_process) %>
-                  </td>
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="21">
-                    <p class="text-base font-semibold text-green-600"><%= sales.sale_value %></p>
-                  </td>
-
-                  <td
-                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell"
-                    data-id="22"
-                  >
-                    <%= Utils.which_payment(sales.sale_payment) %>
-                  </td>
-
-                  <td
-                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
-                    data-id="23"
-                  >
-                    <%= Utils.formated_installment(sales.sale_installment) %>
-                  </td>
-
-                  <%= if sales.sale_paid do %>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="25">
-                      <div class="text-end inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-green-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="h-3 w-3 -translate-x-1 animate-pulse fill-green-300 text-green-300"
-                        >
-                          <circle cx="12" cy="12" r="10"></circle>
-                        </svg>
-                        <%= Utils.formated_payment_status(sales.sale_paid) %>
-                      </div>
-                    </td>
-                  <% else %>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0" data-id="25">
-                      <div class="inline-flex w-fit items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground border-red-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="h-3 w-3 -translate-x-1 animate-pulse fill-red-300 text-red-300"
-                        >
-                          <circle cx="12" cy="12" r="10"></circle>
-                        </svg>
-                        <%= Utils.formated_payment_status(sales.sale_paid) %>
-                      </div>
-                    </td>
-                  <% end %>
-
-                  <td
-                    class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden sm:table-cell"
-                    data-id="27"
-                  >
-                    <%= Utils.formated_date(sales.sale_created_at) %>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="footer">
-              <div class="pagination">
-                <.link
-                  :if={@options.page > 1}
-                  patch={~p"/visao-geral?#{%{@options | page: @options.page - 1}}"}
-                >
-                  Anterior
-                </.link>
-
-                <.link
-                  :for={
-                    {page_number, current_page?} <-
-                      pages(@options, @sales_count)
-                  }
-                  class={if current_page?, do: "active"}
-                  patch={~p"/visao-geral?#{%{@options | page: page_number}}"}
-                >
-                  <%= page_number %>
-                </.link>
-
-                <.link
-                  :if={more_pages?(@options, @sales_count)}
-                  patch={~p"/visao-geral?#{%{@options | page: @options.page + 1}}"}
-                >
-                  Próximo
-                </.link>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Tabela de vendas -->
+      <div class="w-full lg:w-1/2">
+        <.recents_sales_table sales={@streams.sales} timezone={@timezone} />
       </div>
     </div>
   </div>

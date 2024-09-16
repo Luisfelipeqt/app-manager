@@ -105,7 +105,7 @@ defmodule AppWeb.FunctionComponents.GlobalStyle do
       </aside>
 
       <div class="flex flex-col flex-1">
-        <header class="h-16 shadow-lg px-4 md:px-6 bg-[#f6f8fa] dark:bg-[#111] flex shadow">
+        <header class="h-16 shadow-lg px-4 md:px-6 bg-[#f6f8fa] dark:bg-[#111] flex">
           <!-- Header content goes here -->
           <div class="ml-auto flex w-full max-w-md items-center justify-center">
             <div class=" w-full">

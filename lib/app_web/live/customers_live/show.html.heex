@@ -19,21 +19,24 @@
         class="h-4 w-4 "
       >
         <path d="m12 19-7-7 7-7"></path>
-
+        
         <path d="M19 12H5"></path>
       </svg>
-      <span class="sr-only " data-id="40">Back</span>
+       <span class="sr-only " data-id="40">Back</span>
     </.link>
+    
     <div class="flex items-center justify-center">
       <div class="text-center">
         <h2 class="gradient-colors">
           Todos os seus Clientes
         </h2>
+        
         <p class="text-gray-500 text-xs dark:text-gray-400">
           Visualize e gerencie os seus clientes.
         </p>
       </div>
     </div>
+    
     <div class="rounded-lg overflow-hidden shadow-md">
       <div class="relative w-full overflow-auto mt-4">
         <div class="flex justify-end">
@@ -47,12 +50,13 @@
                 @options.per_page
               ) %>
             </select>
-
+            
             <label class="block mb-2 text-xs font-medium" for="per-page">
               por página
             </label>
           </form>
         </div>
+        
         <table class="w-full caption-bottom text-sm shadow">
           <thead class="[&amp;_tr]:border-b">
             <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
@@ -61,42 +65,43 @@
                   Identificação
                 </.sort_link>
               </th>
+              
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                 <.sort_link sort_by={:full_name} options={@options}>
                   Cliente
                 </.sort_link>
               </th>
-
+              
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                 <.sort_link sort_by={:cpf} options={@options}>
                   CPF
                 </.sort_link>
               </th>
-
+              
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                 <.sort_link sort_by={:mobile_phone} options={@options}>
                   Telefone
                 </.sort_link>
               </th>
-
+              
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                 <.sort_link sort_by={:birthday} options={@options}>
                   Data Nascimento
                 </.sort_link>
               </th>
-
+              
               <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                 <.sort_link sort_by={:created_at} options={@options}>
                   Registrado
                 </.sort_link>
               </th>
-
+              
               <th class="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right">
                 Ação
               </th>
             </tr>
           </thead>
-
+          
           <tbody id="customers" phx-update="stream" class="[&amp;_tr:last-child]:border-0">
             <tr
               :for={{customer_id, customer} <- @streams.customers}
@@ -106,6 +111,7 @@
               <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 select-all font-semibold text-sm">
                 <%= customer.id %>
               </td>
+              
               <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                 <div class="flex items-center gap-4">
                   <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
@@ -115,39 +121,39 @@
                       src={customer.image_url}
                     />
                   </span>
-
+                  
                   <div>
                     <h3 class="font-medium text-base antialiased">
                       <%= customer.full_name %>
                     </h3>
-
+                    
                     <p class="text-gray-500 dark:text-gray-400 text-xs antialiased select-all">
                       <%= customer.email %>
                     </p>
                   </div>
                 </div>
               </td>
-
+              
               <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 select-all">
                 <%= customer.cpf %>
               </td>
-
+              
               <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 select-all">
                 <%= customer.mobile_phone %>
               </td>
-
+              
               <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                 <span>
                   <%= Utils.formated_date(customer.birthday) %>
                 </span>
               </td>
-
+              
               <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                 <span>
                   <%= Utils.formated_date(customer.created_at) %>
                 </span>
               </td>
-
+              
               <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
                 <.link navigate={~p"/cliente/#{customer.id}/mostrar"}>
                   <button
@@ -168,15 +174,17 @@
                       class="h-4 w-4"
                     >
                       <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                      
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
-                    <span class="sr-only" data-id="26">Mostrar</span>
+                     <span class="sr-only" data-id="26">Mostrar</span>
                   </button>
                 </.link>
               </td>
             </tr>
           </tbody>
         </table>
+        
         <div class="footer">
           <div class="pagination">
             <.link
@@ -185,7 +193,7 @@
             >
               Anterior
             </.link>
-
+            
             <.link
               :for={
                 {page_number, current_page?} <-
@@ -196,7 +204,7 @@
             >
               <%= page_number %>
             </.link>
-
+            
             <.link
               :if={more_pages?(@options, @customers_count)}
               patch={~p"/clientes/mostrar?#{%{@options | page: @options.page + 1}}"}

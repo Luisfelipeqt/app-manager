@@ -23,16 +23,22 @@ import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import darkModeHook from "../vendor/dark_mode"
 import relativeTime from "../vendor/relative_time"
-
-
+import lineChart from "../vendor/line-chart"
+import searchBar from "../vendor/search_bar"
 let Hooks = {}
+Hooks.LineChart = lineChart
 Hooks.DarkThemeToggle = darkModeHook
 Hooks.RelativeTime = relativeTime
+Hooks.SearchBar = searchBar
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   hooks: Hooks,
-  params: {_csrf_token: csrfToken}
+  params: {
+    _csrf_token: csrfToken,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+
+  }
 })
 
 // Show progress bar on live navigation and form submits
@@ -49,3 +55,10 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
+window.addEventListener("flash:autoclear", (e) => {
+  const el = e.target
+
+  setTimeout(() => {
+    liveSocket.execJS(el, el.getAttribute("phx-click"))
+  }, 1000)
+})
